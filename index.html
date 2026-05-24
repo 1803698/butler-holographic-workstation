@@ -50,7 +50,7 @@
         }
         .cursor-blink { animation: blink 1s step-end infinite; }
         @keyframes blink { 50% { opacity: 0; } }
-        /* 适老化优化：增大 Tag 标签内边距和字号 */
+        /* 适老化优化：增大 Tag 标签内边距 and 字号 */
         .tag-pill {
             @apply px-3.5 py-2 rounded-xl text-[14px] font-bold flex items-center gap-1.5 whitespace-nowrap;
         }
@@ -61,20 +61,73 @@
 </head>
 <body class="bg-slate-200 min-h-screen flex items-center justify-center p-4 font-sans antialiased text-slate-800">
 
-    <!-- 面向董总的高管体验引导 (仅 PC 屏可见) -->
-    <div class="hidden md:block absolute left-8 top-12 w-80 space-y-4">
-        <div class="flex items-center gap-2 border-b-2 border-brand pb-2">
-            <i data-lucide="monitor-smartphone" class="w-6 h-6 text-brand"></i>
-            <h2 class="text-xl font-bold text-slate-800">AI 数字化系统体验指南</h2>
+    <!-- 面向嘉信高管与骨干的数字化系统体验指南 (针对适老化优化：增大容器宽度、调整行高和字号、增强对比度，仅 PC 屏可见) -->
+    <div class="hidden md:block absolute left-8 top-12 w-[370px] max-h-[85vh] overflow-y-auto pr-3 space-y-6">
+        <div class="flex items-center gap-2.5 border-b-2 border-brand pb-4">
+            <i data-lucide="sparkles" class="w-7 h-7 text-brand shrink-0"></i>
+            <h2 class="text-2xl font-black text-slate-900 tracking-tight">嘉信 管家工作台 体验指南</h2>
         </div>
-        <p class="text-sm text-slate-700 font-bold mb-2">尊敬的嘉信同仁：</p>
-        <p class="text-[14px] text-slate-600 mb-4 leading-relaxed">这是为嘉信量身定制的【管家单兵全息工作台】高保真原型。本版本在您框选的区域中深度重塑了<strong>微信级封闭式多维度资产解绑与确认功能</strong>。</p>
-        <ol class="list-decimal list-inside text-[14px] text-slate-600 space-y-3 leading-relaxed">
-            <li><strong>业务背景：</strong>右侧模拟一线管家在手机端遭遇【高关注业主】单聊发难。</li>
-            <li><strong>工作台雷达：</strong>点击底部 <strong>[全息工作台]</strong>，默认首屏展现“客户图谱”。</li>
-            <li><strong>资产解绑体验：</strong>点击关联房产列表旁边的 <strong>[解绑]</strong> 按钮（例如解绑青山项目 5栋 405）。</li>
-            <li><strong>二次确认保护：</strong>界面会弹出微信级别的 <strong>解绑确认对话框</strong>，提示管家确认影响。点击“确认解绑”后，沙盒数据才会实时剔除，并自动联动更新状态。</li>
-        </ol>
+        
+        <div class="bg-white p-5 rounded-2xl border border-slate-300/80 shadow-md space-y-4">
+            <h3 class="text-[17px] font-black text-slate-900 flex items-center gap-1.5">
+                <span>💡</span> 核心产品主张
+            </h3>
+            <p class="text-[15px] text-slate-700 leading-relaxed font-bold">
+                “技术是手段，人心是目的。” 本平台是专为嘉信物业量身定制的<strong>楼栋管家全息工作台</strong>。旨在将 AI 的冷静算力与一线管家的温暖服务融为一体，化解物业管理高频痛点。
+            </p>
+        </div>
+
+        <div class="space-y-5">
+            <h3 class="text-[15px] font-black text-slate-500 uppercase tracking-wider pl-1">🛠️ 黄金功能体验动线</h3>
+            
+            <!-- 体验点1 -->
+            <div class="bg-blue-50/70 p-5 rounded-2xl border border-blue-200 shadow-sm space-y-2.5">
+                <div class="flex items-center gap-2.5 text-brand font-black text-[16px]">
+                    <span class="bg-brand text-white w-6 h-6 rounded-full flex items-center justify-center text-xs shrink-0 shadow-sm">1</span>
+                    「人」- 暖心智能防爆草稿
+                </div>
+                <p class="text-[14.5px] text-slate-700 leading-relaxed font-medium">
+                    右侧模拟业主在深夜发难投诉。点击底部 <strong class="text-slate-900">[AI助手]</strong>，AI 会基于漏水客诉历史和欠费背景，秒级自动撰写“降温话术”，避免人工推诿。点击 <strong class="text-slate-900">[一键填入]</strong> 体验与企微的完美连通。
+                </p>
+            </div>
+
+            <!-- 体验点2 -->
+            <div class="bg-emerald-50/70 p-5 rounded-2xl border border-emerald-200 shadow-sm space-y-2.5">
+                <div class="flex items-center gap-2.5 text-emerald-800 font-black text-[16px]">
+                    <span class="bg-emerald-600 text-white w-6 h-6 rounded-full flex items-center justify-center text-xs shrink-0 shadow-sm">2</span>
+                    「房」- 跨项目资产动态解绑
+                </div>
+                <p class="text-[14.5px] text-slate-700 leading-relaxed font-medium">
+                    点击 <strong class="text-slate-900">[全息工作台]</strong>，点击 <strong>关联资产展开区</strong>。针对一户多资产管理，点击青山项目 5栋405 旁的 <strong class="text-rose-600">[解绑]</strong>。即可触发<strong>微信级封闭式二次确认对话框</strong>，保护重要资产关联不因误触丢失。
+                </p>
+            </div>
+
+            <!-- 体验点3 -->
+            <div class="bg-indigo-50/70 p-5 rounded-2xl border border-indigo-200 shadow-sm space-y-2.5">
+                <div class="flex items-center gap-2.5 text-indigo-800 font-black text-[16px]">
+                    <span class="bg-indigo-600 text-white w-6 h-6 rounded-full flex items-center justify-center text-xs shrink-0 shadow-sm">3</span>
+                    「房人联动」- 动态重组关系图谱
+                </div>
+                <p class="text-[14.5px] text-slate-700 leading-relaxed font-medium">
+                    进入工作台的 <strong class="text-slate-900">[资产档案]</strong> 轴，将房屋状态变更为 <strong>“出租”</strong>，再切回 <strong class="text-slate-900">[客户图谱]</strong>。您将发现同住人员已随动重组为“当前租客张女士（电商主播）”，实现精细到房的穿透治理。
+                </p>
+            </div>
+
+            <!-- 体验点4 -->
+            <div class="bg-rose-50/70 p-5 rounded-2xl border border-rose-200 shadow-sm space-y-2.5">
+                <div class="flex items-center gap-2.5 text-rose-800 font-black text-[16px]">
+                    <span class="bg-rose-600 text-white w-6 h-6 rounded-full flex items-center justify-center text-xs shrink-0 shadow-sm">4</span>
+                    「事」- 待办闭环与有温度催费
+                </div>
+                <p class="text-[14.5px] text-slate-700 leading-relaxed font-medium">
+                    在 <strong class="text-slate-900">[业务跟进]</strong> 体验 <strong class="text-rose-700">[AI催费]</strong>，体验如何将冰冷的账单催收软化为“带温控”的关怀。点击铅笔图标，选 <strong>“5秒后”</strong> 设定待办，回到企微，体验 5 秒后推送的高拟真机器人提醒。
+                </p>
+            </div>
+        </div>
+
+        <p class="text-[13px] text-slate-500 font-bold text-center border-t border-slate-300 pt-4 pb-2">
+            嘉信物业AI系统·体验沙盒 · 祝体验愉快
+        </p>
     </div>
 
     <!-- 手机模拟器核心区 -->
@@ -1226,6 +1279,7 @@
             modal.classList.add('opacity-0', 'pointer-events-none', 'scale-95');
         }
 
+        // 保存资料
         function saveMemberModal() {
             closeMemberModal();
             showCustomToast("✓ 成员档案已保存");
@@ -1689,6 +1743,7 @@
             }
         }
 
+        // 根据房屋状态渲染不同的同住成员关系列表 (体现房人绑定关系随动)
         function renderMemberList(status) {
             const list = document.getElementById('member-list');
             if (!list) return;
