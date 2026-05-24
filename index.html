@@ -4,21 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>管家全息工作台 | 嘉信物业AI系统演示</title>
-    <!-- 引入 Tailwind CSS -->
+    <!-- 引入 Tailwind CSS 进行极简 UI 搭建 -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- 引入 Lucide 图标 -->
     <script src="https://unpkg.com/lucide@latest"></script>
     <script>
+        window.tailwind = window.tailwind || {};
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
                         wechat: '#EDEDED',
                         primary: '#10a37f', 
-                        brand: '#2563eb',
-                        accentPerson: '#4f46e5', // 客户图谱主色（靛蓝）
-                        accentProperty: '#059669', // 资产档案主色（翡绿）
-                        accentEvent: '#e11d48' // 业务跟进主色（玫瑰红）
+                        brand: '#2563eb'
                     },
                     animation: {
                         'slide-up': 'slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
@@ -43,587 +41,653 @@
         .phone-mockup {
             width: 390px;
             height: 844px;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.3), 0 0 0 12px #1f2937;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 0 0 12px #1f2937;
             border-radius: 40px;
             overflow: hidden;
             position: relative;
             margin: 20px auto;
-            background-color: #F3F4F6;
+            background-color: #EDEDED;
         }
         .cursor-blink { animation: blink 1s step-end infinite; }
         @keyframes blink { 50% { opacity: 0; } }
-        /* 适老化及高级感优化：精简圆角、适中字号 */
+        /* 适老化优化：增大 Tag 标签内边距和字号 */
         .tag-pill {
-            @apply px-2.5 py-1 rounded-lg text-[12px] font-bold flex items-center gap-1.5 whitespace-nowrap transition-all duration-200;
+            @apply px-3.5 py-2 rounded-xl text-[14px] font-bold flex items-center gap-1.5 whitespace-nowrap;
         }
-        /* 极简下拉框样式 */
         .select-clean {
-            @apply w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-[14px] font-semibold text-slate-800 focus:outline-none focus:border-slate-400 focus:bg-white transition-colors appearance-none;
+            @apply w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 text-[15px] font-bold text-slate-800 focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand transition-all;
         }
     </style>
 </head>
-<body class="bg-slate-300 min-h-screen flex items-center justify-center p-4 font-sans antialiased text-slate-800">
+<body class="bg-slate-200 min-h-screen flex items-center justify-center p-4 font-sans antialiased text-slate-800">
 
-    <!-- 面向高管体验引导 (仅 PC 屏可见) -->
+    <!-- 面向董总的高管体验引导 (仅 PC 屏可见) -->
     <div class="hidden md:block absolute left-8 top-12 w-80 space-y-4">
-        <div class="flex items-center gap-2 border-b-2 border-slate-800 pb-2">
-            <i data-lucide="monitor-smartphone" class="w-6 h-6 text-slate-800"></i>
+        <div class="flex items-center gap-2 border-b-2 border-brand pb-2">
+            <i data-lucide="monitor-smartphone" class="w-6 h-6 text-brand"></i>
             <h2 class="text-xl font-bold text-slate-800">AI 数字化系统体验指南</h2>
         </div>
         <p class="text-sm text-slate-700 font-bold mb-2">尊敬的嘉信同仁：</p>
-        <p class="text-[14px] text-slate-600 mb-4 leading-relaxed">
-            本版本修复了抽屉遮挡死角，并全面打通了<strong>“AI 智能催费双轨话术引用机制”</strong>：
-        </p>
+        <p class="text-[14px] text-slate-600 mb-4 leading-relaxed">这是为嘉信量身定制的【管家单兵全息工作台】高保真原型。本版本在您框选的区域中深度重塑了<strong>微信级封闭式多维度资产解绑与确认功能</strong>。</p>
         <ol class="list-decimal list-inside text-[14px] text-slate-600 space-y-3 leading-relaxed">
-            <li><strong>触控热区全面加固：</strong>所有互动按钮的内部图标和文本均绑定了 <code>pointer-events-none</code> 属性。现在，点击按钮外部边角或文本、图标的任何空隙，都能100%敏捷触发动作。</li>
-            <li><strong>体验状态抽屉自动收回：</strong>打开工作台后，在【资产档案】页点击 <strong>“状态：自住”</strong> 展开房屋使用状态切换，随后直接点击上方 [客户图谱] 或 [业务跟进]，<strong>状态抽屉将随手优雅缩回，界面层级干脆利落。</strong></li>
-            <li><strong>体验 AI 催费闭环：</strong>切换至【业务跟进】页，点击红色欠款卡片上的 <strong>[AI催费]</strong> 按钮，系统将开启“AI 结合漏水工程档案及客情脾气”的<strong>拟真式打字机流式语气调优过程</strong>。完成生成后，点击 <strong>[一键引用]</strong>，即可自动关闭工作台并完美填充对话框，实现全链路闭环。</li>
+            <li><strong>业务背景：</strong>右侧模拟一线管家在手机端遭遇【高关注业主】单聊发难。</li>
+            <li><strong>工作台雷达：</strong>点击底部 <strong>[全息工作台]</strong>，默认首屏展现“客户图谱”。</li>
+            <li><strong>资产解绑体验：</strong>点击关联房产列表旁边的 <strong>[解绑]</strong> 按钮（例如解绑青山项目 5栋 405）。</li>
+            <li><strong>二次确认保护：</strong>界面会弹出微信级别的 <strong>解绑确认对话框</strong>，提示管家确认影响。点击“确认解绑”后，沙盒数据才会实时剔除，并自动联动更新状态。</li>
         </ol>
-
-        <div class="mt-8 pt-4 border-t border-slate-300">
-            <h3 class="font-bold text-slate-800 mb-3 flex items-center gap-2"><i data-lucide="test-tube" class="w-5 h-5 text-slate-600"></i> 演示场景模拟器</h3>
-            <div class="flex gap-2 bg-slate-300 p-1.5 rounded-xl w-fit shadow-inner">
-                <button id="sim-btn-old" onclick="switchScenario('old')" class="px-4 py-2 text-[13px] font-bold rounded-lg bg-white shadow-sm text-slate-800 transition-all">老业主发难</button>
-                <button id="sim-btn-new" onclick="switchScenario('new')" class="px-4 py-2 text-[13px] font-bold rounded-lg text-slate-600 hover:text-slate-800 transition-all">新微友(未绑房)</button>
-            </div>
-        </div>
     </div>
 
     <!-- 手机模拟器核心区 -->
     <div class="phone-mockup flex flex-col relative bg-wechat">
         
-        <!-- 模拟企微顶部导航 (单聊语境) -->
+        <!-- 模拟企微顶部导航 -->
         <div class="bg-slate-100 pt-12 pb-3 px-4 flex items-center justify-between border-b border-slate-200 z-10 sticky top-0 shadow-sm">
             <div class="flex items-center gap-3">
                 <i data-lucide="chevron-left" class="w-7 h-7 text-slate-800 cursor-pointer"></i>
-                <span class="font-bold text-xl" id="chat-header-title">王老师 (3栋102)</span>
+                <span class="font-extrabold text-xl">王老师 (3栋102)</span>
             </div>
             <i data-lucide="more-horizontal" class="w-7 h-7 text-slate-800 cursor-pointer"></i>
         </div>
 
-        <!-- 模拟企微聊天内容区 (单聊语境) -->
-        <div class="flex-1 overflow-y-auto p-4 space-y-6">
-            <div class="text-center"><span class="text-[12px] font-medium bg-slate-200/60 text-slate-500 px-2.5 py-1 rounded-md">10:24</span></div>
-            
-            <!-- 老客户场景下的对话发难 -->
-            <div class="flex gap-3 items-start" id="chat-msg-old">
-                <div class="w-11 h-11 rounded bg-indigo-500 flex items-center justify-center text-white text-lg font-bold shrink-0 shadow-md">王</div>
+        <!-- 模拟企微聊天内容区 -->
+        <div class="flex-1 overflow-y-auto p-4 space-y-6" id="chat-container">
+            <div class="text-center"><span class="text-sm bg-slate-200/60 text-slate-500 px-2.5 py-1 rounded-md">10:24</span></div>
+            <!-- 业主发言 -->
+            <div class="flex gap-3 items-start">
+                <div class="w-12 h-12 rounded bg-indigo-500 flex items-center justify-center text-white text-lg font-bold shrink-0 shadow-sm">王</div>
                 <div class="space-y-1">
-                    <div class="bg-white p-3.5 rounded-2xl rounded-tl-none shadow-md text-[16px] border border-slate-100 text-slate-800 max-w-[270px] mt-1 leading-relaxed">
+                    <div class="bg-white p-4 rounded-xl rounded-tl-none shadow-sm text-[16px] border border-slate-100 text-slate-800 max-w-[270px] mt-1 leading-relaxed font-medium">
                         小刘管家，你们物业到底管不管事？！楼道保洁三天没打扫了！我交的物业费都拿去干嘛了？今天不给我个说法，明年的费我绝对不交了！
-                    </div>
-                </div>
-            </div>
-
-            <!-- 新加微信场景下的空白问候 -->
-            <div class="flex gap-3 items-start hidden" id="chat-msg-new">
-                <div class="w-11 h-11 rounded bg-slate-300 flex items-center justify-center text-slate-600 text-lg font-bold shrink-0 shadow-md">客</div>
-                <div class="space-y-1">
-                    <div class="bg-white p-3.5 rounded-2xl rounded-tl-none shadow-md text-[16px] border border-slate-100 text-slate-800 max-w-[270px] mt-1 leading-relaxed">
-                        你好，我是新搬来的，保洁 and 物业对接群怎么加？
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- 模拟企微底部输入区 (含应用快捷栏) -->
+        <!-- 模拟企微底部输入区 -->
         <div class="bg-slate-100 flex flex-col border-t border-slate-200 z-10">
             <!-- 企微原生快捷应用扩展栏 -->
             <div class="px-3 py-3 flex items-center gap-2 overflow-x-auto">
-                <button onclick="openAiAssistant()" class="flex items-center gap-1.5 bg-white border border-blue-200 text-brand px-4 py-2 rounded-full shadow-sm text-[14px] font-bold hover:bg-blue-50 active:scale-95 shrink-0 transition-all">
-                    <i data-lucide="bot" class="w-4 h-4 pointer-events-none"></i> <span class="pointer-events-none">AI 助手</span>
+                <button onclick="openAiAssistant()" class="flex items-center gap-1.5 bg-white border border-blue-200 text-brand px-4 py-2 rounded-full shadow-sm text-[14px] font-bold hover:bg-blue-50 active:scale-95 shrink-0 transition-transform">
+                    <i data-lucide="bot" class="w-4 h-4"></i> AI 助手
                 </button>
-                <button onclick="openWorkbench()" class="flex items-center gap-1.5 bg-slate-800 text-white px-4 py-2 rounded-full shadow-sm text-[14px] font-bold active:scale-95 shrink-0 transition-all hover:bg-slate-900">
-                    <i data-lucide="layout-grid" class="w-4 h-4 pointer-events-none"></i> <span class="pointer-events-none">工作台</span>
+                <button onclick="openWorkbench()" class="flex items-center gap-1.5 bg-slate-800 text-white border border-slate-700 px-4 py-2 rounded-full shadow-md text-[14px] font-bold hover:bg-slate-900 active:scale-95 shrink-0 transition-transform">
+                    <i data-lucide="layout-dashboard" class="w-4 h-4"></i> 全息工作台
                 </button>
-                <button class="flex items-center gap-1.5 bg-white border border-slate-200 text-slate-600 px-4 py-2 rounded-full shadow-sm text-[14px] font-medium shrink-0 hover:bg-slate-50 transition-all">
-                    <i data-lucide="message-square-plus" class="w-4 h-4 text-slate-400 pointer-events-none"></i> <span class="pointer-events-none">快捷回复</span>
+                <button class="flex items-center gap-1.5 bg-white border border-slate-200 text-slate-600 px-4 py-2 rounded-full shadow-sm text-[14px] shrink-0 font-bold">
+                    <i data-lucide="message-square-plus" class="w-4 h-4"></i> 快捷回复
                 </button>
             </div>
             
             <!-- 输入框主体 -->
             <div class="p-3 pb-8 pt-1 flex gap-2 items-end">
-                <i data-lucide="mic" class="w-8 h-8 text-slate-500 mb-1.5"></i>
-                <div id="mock-input" class="flex-1 bg-white min-h-[44px] rounded-xl px-4 py-2.5 text-[16px] text-slate-400 border border-slate-200 flex items-center break-all whitespace-pre-wrap">
+                <i data-lucide="mic" class="w-8 h-8 text-slate-600 mb-1.5"></i>
+                <div id="mock-input" class="flex-1 bg-white min-h-[48px] rounded-xl px-4 py-3 text-[16px] text-slate-500 border border-slate-200 shadow-inner flex items-center break-all whitespace-pre-wrap">
                     回车发送消息...
                 </div>
                 <div id="extra-icons" class="flex gap-2 items-end mb-1.5">
-                    <i data-lucide="smile" class="w-8 h-8 text-slate-500"></i>
-                    <i data-lucide="plus-circle" class="w-8 h-8 text-slate-500"></i>
+                    <i data-lucide="smile" class="w-8 h-8 text-slate-600"></i>
+                    <i data-lucide="plus-circle" class="w-8 h-8 text-slate-600"></i>
                 </div>
-                <div id="send-btn" class="w-9 h-9 bg-brand rounded-full flex items-center justify-center text-white shadow-sm mb-1 hidden cursor-pointer" onclick="alert('实机环境将直接发送该消息')">
-                    <i data-lucide="send" class="w-4 h-4 ml-0.5 pointer-events-none"></i>
+                <div id="send-btn" class="w-9 h-9 bg-brand rounded-full flex items-center justify-center text-white shadow-sm mb-1 hidden cursor-pointer shrink-0" onclick="sendMessage()">
+                    <i data-lucide="send" class="w-5 h-5 ml-0.5"></i>
                 </div>
             </div>
         </div>
 
         <!-- ========================================== -->
-        <!-- 🚀 模块一：AI 助手半屏弹窗 (辅助作战) -->
+        <!-- 🚀 模块一：AI 助手半屏弹窗 (带图标) -->
         <!-- ========================================== -->
         <div id="ai-backdrop" class="absolute inset-0 bg-slate-900/40 backdrop-blur-sm z-40 hidden animate-fade-in transition-opacity duration-300 opacity-0" onclick="closeAiAssistant()"></div>
         
-        <div id="ai-sheet" class="absolute bottom-0 left-0 right-0 bg-white rounded-t-3xl z-50 h-[65%] flex flex-col hidden animate-slide-up shadow-[0_-10px_40px_rgba(0,0,0,0.15)] transition-transform duration-300 translate-y-full">
+        <div id="ai-sheet" class="absolute bottom-0 left-0 right-0 bg-white rounded-t-3xl z-50 h-[70%] flex flex-col hidden animate-slide-up shadow-[0_-10px_40px_rgba(0,0,0,0.15)] transition-transform duration-300 translate-y-full">
             <div class="pt-3 pb-4 flex flex-col items-center border-b border-slate-100 bg-slate-50/80 rounded-t-3xl">
-                <div class="w-10 h-1 bg-slate-300 rounded-full mb-4"></div>
+                <div class="w-12 h-1.5 bg-slate-300 rounded-full mb-3"></div>
                 <div class="w-full px-5 flex justify-between items-center">
-                    <div class="flex items-center gap-2.5">
-                        <div class="bg-blue-50 text-brand p-1.5 rounded-lg border border-blue-100"><i data-lucide="brain-circuit" class="w-5 h-5 pointer-events-none"></i></div>
-                        <span class="text-[16px] font-bold text-slate-800 tracking-wide pointer-events-none" id="ai-context-title">上下文：3栋102 - 王老师</span>
+                    <div class="flex items-center gap-2">
+                        <div class="bg-blue-100 text-brand p-2 rounded-lg"><i data-lucide="brain-circuit" class="w-5 h-5"></i></div>
+                        <span class="text-[16px] font-extrabold text-slate-800">目标上下文：3栋102 - 王老师</span>
                     </div>
-                    <button onclick="closeAiAssistant()" class="w-8 h-8 bg-slate-100 rounded-full flex items-center justify-center text-slate-500 hover:bg-slate-200 active:scale-95 transition-all">
-                        <i data-lucide="x" class="w-4 h-4 pointer-events-none"></i>
+                    <button onclick="closeAiAssistant()" class="w-9 h-9 bg-slate-200 rounded-full flex items-center justify-center text-slate-600 hover:bg-slate-300 active:scale-95 transition-all">
+                        <i data-lucide="x" class="w-5 h-5"></i>
                     </button>
                 </div>
             </div>
 
             <div class="flex-1 overflow-y-auto p-5 pb-8 flex flex-col gap-6">
-                <!-- 战术瞭望台 -->
-                <div class="grid grid-cols-2 gap-3" id="ai-widgets-box">
-                    <div class="bg-rose-50/70 border border-rose-200 rounded-xl p-3 flex items-center gap-2 shadow-sm">
-                        <div class="w-2 h-2 rounded-full bg-rose-500 animate-pulse shrink-0"></div>
-                        <div class="text-[13px] font-bold text-rose-700">欠费 5 个月</div>
+                <!-- AI提取的标签 -->
+                <div class="grid grid-cols-2 gap-3.5">
+                    <div class="bg-rose-50 border border-rose-100 rounded-xl p-3 flex items-center gap-2">
+                        <div class="w-2.5 h-2.5 rounded-full bg-rose-500 animate-pulse shrink-0"></div>
+                        <div class="text-[15px] font-bold text-rose-700">欠费 5 个月</div>
                     </div>
-                    <div class="bg-amber-50/70 border border-amber-200 rounded-xl p-3 flex items-center gap-2 shadow-sm">
-                        <i data-lucide="zap" class="w-4 h-4 text-amber-600 fill-amber-500 shrink-0"></i>
-                        <div class="text-[13px] font-bold text-amber-800">高关注/KOL</div>
+                    <div class="bg-amber-50 border border-amber-100 rounded-xl p-3 flex items-center gap-2">
+                        <i data-lucide="zap" class="w-5 h-5 text-amber-500 fill-amber-500 shrink-0"></i>
+                        <div class="text-[15px] font-bold text-amber-800">高关注/KOL</div>
                     </div>
-                    <div class="bg-blue-50/70 border border-blue-200 rounded-xl p-3 flex items-center gap-2 shadow-sm">
-                        <i data-lucide="droplets" class="w-4 h-4 text-blue-600 shrink-0"></i>
-                        <div class="text-[13px] font-bold text-blue-800">漏水隐患记录</div>
+                    <div class="bg-blue-50 border border-blue-100 rounded-xl p-3 flex items-center gap-2">
+                        <i data-lucide="droplets" class="w-5 h-5 text-blue-600 shrink-0"></i>
+                        <div class="text-[15px] font-bold text-blue-800">历史漏水客诉</div>
                     </div>
-                    <div class="bg-slate-50 border border-slate-200 rounded-xl p-3 flex items-center gap-2 shadow-sm">
-                        <i data-lucide="moon" class="w-4 h-4 text-slate-400 shrink-0"></i>
-                        <div class="text-[13px] font-bold text-slate-600">20点后单聊</div>
+                    <div class="bg-slate-100 border border-slate-200 rounded-xl p-3 flex items-center gap-2">
+                        <i data-lucide="moon" class="w-5 h-5 text-slate-600 shrink-0"></i>
+                        <div class="text-[15px] font-bold text-slate-700">20点后单聊</div>
                     </div>
                 </div>
 
-                <!-- 话术生成区 -->
                 <div class="flex flex-col gap-3 flex-1">
                     <div class="flex items-center justify-between">
-                        <span class="text-[12px] font-bold text-slate-400 tracking-wider">智能安抚草稿</span>
-                        <span id="ai-status" class="text-[13px] text-brand flex items-center gap-1 font-medium">
-                            <i data-lucide="loader-2" class="w-3.5 h-3.5 animate-spin"></i> 分析单聊情境中...
+                        <span class="text-[14px] font-extrabold text-slate-500 uppercase tracking-wider">智能防爆草稿</span>
+                        <span id="ai-status" class="text-[14px] text-brand flex items-center gap-1 font-medium">
+                            <i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i> 分析单聊情境中...
                         </span>
                     </div>
-                    <div class="bg-slate-50 rounded-2xl p-5 border border-slate-200 flex-1 flex flex-col relative shadow-inner">
-                        <div class="text-[15px] text-slate-700 leading-relaxed min-h-[70px]">
-                            <span id="typewriter-text"></span><span id="cursor" class="inline-block w-1.5 h-4 bg-brand ml-0.5 align-middle cursor-blink"></span>
+                    <div class="bg-gradient-to-br from-blue-50 to-indigo-50/30 rounded-2xl p-5 border border-blue-100 flex-1 flex flex-col relative">
+                        <div class="text-[16px] text-slate-800 leading-relaxed min-h-[70px] font-medium">
+                            <span id="typewriter-text"></span><span id="cursor" class="inline-block w-2 h-5 bg-brand ml-0.5 align-middle cursor-blink"></span>
                         </div>
-                        <button id="fill-btn" onclick="fillInput()" class="mt-5 w-full bg-slate-800 text-white py-3.5 rounded-xl text-[15px] font-bold shadow-md flex items-center justify-center gap-2 opacity-0 transform translate-y-2 transition-all duration-300 disabled:bg-slate-300">
-                            <i data-lucide="clipboard-copy" class="w-4 h-4 pointer-events-none"></i> <span class="pointer-events-none">一键填入企微文本框</span>
+                        <button id="fill-btn" onclick="fillInput()" class="mt-5 w-full bg-brand text-white py-4 rounded-xl text-[16px] font-bold shadow-md flex items-center justify-center gap-2 opacity-0 transform translate-y-2 transition-all duration-300 disabled:bg-slate-300">
+                            <i data-lucide="clipboard-copy" class="w-5 h-5"></i> 一键填入企微文本框
                         </button>
                     </div>
                 </div>
             </div>
 
             <!-- LUI 语音入口 -->
-            <div class="px-5 pb-8 pt-4 bg-white border-t border-slate-100 relative">
+            <div class="px-5 pb-8 pt-4 bg-white border-t border-slate-100 relative shadow-[0_-5px_20px_rgba(0,0,0,0.03)]">
                 <div class="text-center mb-3">
-                    <span id="lui-hint-ai" class="text-[12px] font-medium text-slate-400">口述指令：“将3栋102标注为出租状态”</span>
+                    <span id="lui-hint-ai" class="text-[14px] font-bold text-slate-500">口述指令：“给业主打上山西人标签，标注空置”</span>
                 </div>
-                <button id="mic-btn-ai" onmousedown="startRecordAi(event)" onmouseup="stopRecordAi(event)" onmouseleave="cancelRecordAi(event)" ontouchstart="startRecordAi(event)" ontouchend="stopRecordAi(event)" class="w-full bg-slate-100 text-slate-700 py-3.5 rounded-xl text-[15px] font-bold flex items-center justify-center gap-2 border border-slate-200 shadow-sm hover:bg-slate-200 active:scale-[0.98] transition-all relative overflow-hidden select-none">
+                <button id="mic-btn-ai" onmousedown="startRecordAi(event)" onmouseup="stopRecordAi(event)" onmouseleave="cancelRecordAi(event)" ontouchstart="startRecordAi(event)" ontouchend="stopRecordAi(event)" class="w-full bg-slate-800 text-white py-4 rounded-2xl text-[16px] font-bold flex items-center justify-center gap-2 shadow-lg hover:bg-slate-900 active:scale-95 active:bg-brand transition-all relative overflow-hidden select-none">
                     <div id="mic-content-ai" class="flex items-center justify-center gap-2 pointer-events-none">
-                        <i data-lucide="mic" class="w-5 h-5 text-brand"></i>
-                        <span>按住 帮我记录</span>
+                        <i data-lucide="mic" class="w-6 h-6"></i>
+                        <span>按住 帮我做</span>
                     </div>
                 </button>
             </div>
             
-            <div id="toast-ai" class="absolute bottom-32 left-1/2 transform -translate-x-1/2 w-[90%] bg-slate-800/95 backdrop-blur text-white text-[14px] py-3.5 px-4 rounded-xl shadow-xl flex items-center justify-between opacity-0 pointer-events-none transition-all duration-300 translate-y-4">
+            <div id="toast-ai" class="absolute bottom-32 left-1/2 transform -translate-x-1/2 w-[90%] bg-slate-800/95 backdrop-blur text-white text-[15px] py-4 px-5 rounded-2xl shadow-2xl flex items-center justify-between opacity-0 pointer-events-none transition-all duration-300 translate-y-4">
                 <div class="flex items-center gap-2.5 overflow-hidden">
-                    <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400 shrink-0"></i>
+                    <i data-lucide="check-circle-2" class="w-5 h-5 text-emerald-400 shrink-0"></i>
                     <span class="truncate font-medium">已自动更新相关标签资产</span>
                 </div>
-                <button onclick="undoActionAi()" class="text-slate-300 font-bold shrink-0 ml-3 hover:text-white transition-colors">撤销</button>
+                <button onclick="undoActionAi()" class="text-blue-300 font-extrabold shrink-0 ml-3">撤销</button>
             </div>
         </div>
 
         <!-- ========================================== -->
-        <!-- 🚀 模块二：极简分段式 工作台大弹窗 -->
+        <!-- 🚀 模块二：全息工作台 大弹窗 (三轴切换) -->
         <!-- ========================================== -->
-        <div id="workbench-backdrop" class="absolute inset-0 bg-slate-900/40 backdrop-blur-sm z-40 hidden animate-fade-in transition-opacity duration-300 opacity-0" onclick="closeWorkbench()"></div>
+        <div id="workbench-backdrop" class="absolute inset-0 bg-slate-900/60 backdrop-blur-sm z-40 hidden animate-fade-in transition-opacity duration-300 opacity-0" onclick="closeWorkbench()"></div>
         
-        <div id="workbench-sheet" class="absolute bottom-0 left-0 right-0 bg-[#F3F4F6] rounded-t-[32px] z-50 h-[88%] flex flex-col hidden animate-slide-up shadow-2xl transition-transform duration-300 translate-y-full">
+        <div id="workbench-sheet" class="absolute bottom-0 left-0 right-0 bg-slate-50 rounded-t-[32px] z-50 h-[92%] flex flex-col hidden animate-slide-up shadow-[0_-15px_50px_rgba(0,0,0,0.15)] transition-transform duration-300 translate-y-full">
             
             <!-- 头部把手 & 关闭按钮 -->
-            <div class="pt-4 pb-2 px-5 flex justify-between items-center bg-white rounded-t-[32px] shrink-0 border-b border-slate-100">
-                <span class="text-[17px] font-bold text-slate-800 flex items-center gap-2 tracking-wide pointer-events-none">
-                    <i data-lucide="shield" class="w-5 h-5 text-slate-700"></i> 管家全息工作台
-                </span>
-                <div class="w-10 h-1 bg-slate-300 rounded-full absolute left-1/2 -translate-x-1/2"></div>
-                <button class="w-8 h-8 flex items-center justify-center rounded-full bg-slate-100 text-slate-500 hover:bg-slate-200 active:scale-95 transition-all" onclick="closeWorkbench()">
-                    <i data-lucide="x" class="w-4 h-4 pointer-events-none"></i>
+            <div class="pt-4 pb-3 px-5 flex justify-between items-center bg-white rounded-t-[32px] border-b border-slate-100 shrink-0 relative">
+                <span class="text-xl font-extrabold text-slate-800">全息工作台</span>
+                <div class="w-14 h-1.5 bg-slate-300 rounded-full absolute left-1/2 -translate-x-1/2"></div>
+                <button class="w-9 h-9 flex items-center justify-center rounded-full bg-slate-100 text-slate-600 hover:bg-slate-200 active:scale-95 transition-all" onclick="closeWorkbench()">
+                    <i data-lucide="x" class="w-5 h-5"></i>
                 </button>
             </div>
 
-            <!-- iOS风格 分段控制器 Tabs (UI重构：极佳边界) -->
-            <div class="bg-slate-200/80 p-1 flex rounded-xl gap-1 shrink-0 mx-4 mt-3 border border-slate-300/40">
-                <button id="tab-person" onclick="switchTab('person')" class="flex-1 py-2 text-center text-[13px] font-bold rounded-lg transition-all bg-white text-indigo-700 shadow-sm flex justify-center items-center gap-1.5 border border-black/[0.04]">
-                    <i data-lucide="user" class="w-4 h-4 pointer-events-none"></i> <span class="pointer-events-none">客户图谱</span>
+            <!-- Tab 轴切换 -->
+            <div class="bg-slate-200/80 p-1 flex rounded-xl gap-1 shrink-0 mx-4 mt-4 border border-slate-200 shadow-inner">
+                <button id="tab-person" onclick="switchTab('person')" class="flex-1 py-2.5 text-[15px] font-extrabold rounded-lg transition-all bg-white text-indigo-700 shadow-sm">
+                    客户图谱
                 </button>
-                <button id="tab-property" onclick="switchTab('property')" class="flex-1 py-2 text-center text-[13px] font-bold rounded-lg transition-all text-slate-600 hover:text-slate-800 flex justify-center items-center gap-1.5">
-                    <i data-lucide="home" class="w-4 h-4 pointer-events-none"></i> <span class="pointer-events-none">资产档案</span>
+                <button id="tab-property" onclick="switchTab('property')" class="flex-1 py-2.5 text-[15px] font-bold rounded-lg transition-all text-slate-500 hover:text-slate-900">
+                    资产档案
                 </button>
-                <button id="tab-events" onclick="switchTab('events')" class="flex-1 py-2 text-center text-[13px] font-bold rounded-lg transition-all text-slate-600 hover:text-slate-800 flex justify-center items-center gap-1.5 relative">
-                    <i data-lucide="activity" class="w-4 h-4 pointer-events-none"></i> <span class="pointer-events-none">业务跟进</span>
-                    <span id="event-badge" class="absolute top-1.5 right-3 w-2 h-2 rounded-full bg-rose-500 border border-white pointer-events-none"></span>
+                <button id="tab-events" onclick="switchTab('events')" class="flex-1 py-2.5 text-[15px] font-bold rounded-lg transition-all text-slate-500 hover:text-slate-900 relative">
+                    业务跟进 <span class="absolute top-2 right-4 w-2 h-2 bg-rose-500 rounded-full"></span>
                 </button>
             </div>
 
             <!-- 主内容滚动区 -->
-            <div class="flex-1 overflow-y-auto pb-28 mt-2">
+            <div class="flex-1 overflow-y-auto pb-32 mt-4 px-4">
 
-                <!-- ==================== 【人】轴：客户图谱 (靛蓝勾边) ==================== -->
-                <div id="content-person" class="p-4 space-y-4">
-                    <!-- 基本画像 (左边栏勾色) -->
-                    <div class="flex justify-between items-start bg-white p-4 rounded-2xl shadow-sm border-l-4 border-l-accentPerson border border-slate-200/50 relative overflow-hidden">
-                        <div class="flex items-center gap-3.5">
-                            <div class="w-12 h-12 rounded-full bg-indigo-50 text-indigo-600 border border-indigo-200 flex items-center justify-center font-bold text-xl shadow-inner pointer-events-none">王</div>
-                            <div>
-                                <h3 class="text-[17px] font-bold text-slate-800 flex items-center gap-2 pointer-events-none">
-                                    王老师 
-                                    <span class="bg-indigo-50 text-indigo-700 text-[10px] px-2 py-0.5 rounded border border-indigo-200 font-bold tracking-wide">企微实名</span>
-                                </h3>
-                                <button onclick="openAssetMap()" class="mt-1.5 flex items-center gap-1 text-indigo-700 hover:text-indigo-900 text-[12px] font-semibold bg-indigo-50 px-2.5 py-1 rounded-lg border border-indigo-100 transition-colors">
-                                    <i data-lucide="layers" class="w-3.5 h-3.5 pointer-events-none"></i>
-                                    <span class="pointer-events-none">名下资产：3栋102 等2项</span>
-                                    <i data-lucide="chevron-right" class="w-3 h-3 pointer-events-none"></i>
+                <!-- ==================== 【人】轴：客户图谱 ==================== -->
+                <div id="content-person" class="space-y-6 animate-fade-in">
+                    <!-- 基本画像 (🚀 经过黄金比例排版优化的卡片) -->
+                    <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 relative overflow-hidden transition-all duration-300">
+                        <div class="absolute top-0 left-0 w-1.5 h-full bg-indigo-500"></div>
+                        <div class="flex flex-col gap-4 pl-2">
+                            
+                            <!-- 第一行：头像身份信息 + 新增资产动作 (完美分离，动作置顶右上角) -->
+                            <div class="flex justify-between items-center w-full">
+                                <div class="flex items-center gap-3.5">
+                                    <div class="w-12 h-12 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-700 text-lg font-bold shadow-inner shrink-0">王</div>
+                                    <div>
+                                        <h3 class="text-[17px] font-extrabold text-slate-800 flex items-center gap-1.5 pointer-events-none">
+                                            王老师 
+                                            <span class="bg-emerald-100 text-emerald-700 text-[11px] px-2 py-0.5 rounded border border-emerald-200 font-bold">已实名</span>
+                                        </h3>
+                                        <p class="text-[13px] text-slate-400 font-semibold mt-0.5">客户ID: CX-202638</p>
+                                    </div>
+                                </div>
+                                <!-- 动作按钮获得独立宽松的点按区 -->
+                                <button onclick="openAddAssetModal(event)" class="text-brand font-extrabold text-[12.5px] bg-blue-50 border border-blue-200 px-3 py-1.5 rounded-xl active:scale-95 transition-all flex items-center gap-1 shrink-0 shadow-sm hover:bg-blue-100">
+                                    <i data-lucide="plus" class="w-4 h-4 pointer-events-none"></i> <span class="pointer-events-none">新增资产</span>
                                 </button>
                             </div>
-                        </div>
-                    </div>
 
-                    <!-- 人物特征标签 -->
-                    <div class="bg-white p-4 rounded-2xl border border-slate-200/50 shadow-sm space-y-2.5">
-                        <div class="text-[12px] font-bold text-slate-400 tracking-wider">
-                            主观客情画像 (换房不丢档)
-                        </div>
-                        <div class="flex flex-wrap gap-2">
-                            <span class="tag-pill bg-amber-500/10 text-amber-800 border border-amber-500/20 shadow-sm">
-                                <i data-lucide="zap" class="w-3.5 h-3.5 text-amber-500 fill-amber-500 animate-pulse"></i> 高关注客群 / KOL
-                            </span>
-                            <span class="tag-pill bg-rose-50 text-rose-700 border border-rose-100">
-                                <i data-lucide="alert-triangle" class="w-3.5 h-3.5 text-rose-500"></i> 曾拒缴沟通
-                            </span>
-                            <span class="tag-pill bg-slate-100 text-slate-700 border border-slate-200">
-                                <i data-lucide="moon" class="w-3.5 h-3.5 text-slate-500"></i> 20点后沟通
-                            </span>
-                            <span class="tag-pill bg-indigo-50 text-indigo-700 border border-indigo-100">
-                                <i data-lucide="map-pin" class="w-3.5 h-3.5 text-indigo-500"></i> 山西籍贯
-                            </span>
-                        </div>
-                    </div>
-
-                    <!-- 【人备注】 -->
-                    <div class="space-y-2.5">
-                        <div class="flex justify-between items-center px-1">
-                            <span class="text-[12px] font-bold text-slate-400">专项备注档案</span>
-                            <button onclick="openNoteModal('person')" class="text-indigo-600 flex items-center gap-1 text-[12px] font-bold bg-white shadow-sm px-3 py-1.5 rounded-lg active:scale-95 border border-indigo-100">
-                                <i data-lucide="edit-3" class="w-3.5 h-3.5 pointer-events-none"></i> <span class="pointer-events-none">添加客情备注</span>
-                            </button>
-                        </div>
-                        <div id="person-notes-list" class="space-y-2.5">
-                            <div class="bg-white border-l-4 border-l-indigo-300 border-y border-r border-slate-200/60 rounded-xl p-3.5 shadow-sm">
-                                <div class="flex justify-between items-center mb-1.5">
-                                    <span class="text-[11px] bg-indigo-50 text-indigo-600 font-bold px-2 py-0.5 rounded border border-indigo-100">客情备注</span>
-                                    <span class="text-[11px] text-slate-400 font-mono">2026-03-30 14:12</span>
+                            <!-- 第二行：通栏式、带微描边的关联资产触发器 -->
+                            <div class="border-t border-slate-100 pt-3.5 flex items-center justify-between">
+                                <div class="flex items-center gap-1.5 cursor-pointer active:opacity-60 hover:text-indigo-600 transition-colors text-[14px] font-bold text-slate-600 w-full" onclick="togglePropertiesList()">
+                                    <i data-lucide="layers" class="w-4 h-4 text-slate-400"></i>
+                                    <span>关联资产：</span>
+                                    <span class="text-indigo-600 font-extrabold underline decoration-dashed decoration-1" id="assets-summary-text">3栋 102 等2项</span>
+                                    <i data-lucide="chevron-down" id="properties-chevron" class="w-4 h-4 text-slate-400 transition-transform duration-300"></i>
                                 </div>
-                                <p class="text-[13px] text-slate-600 leading-relaxed font-medium">
-                                    对保洁细节要求极高；平时习惯周末早上打网球。如果是催缴物业费，请绝对避开周末上午，可在周二或周四晚20点左右先打微信铺垫。
-                                </p>
                             </div>
+                        </div>
+                        
+                        <!-- 隐藏的房产列表展开区 -->
+                        <div id="properties-list-container" class="hidden mt-4 pt-4 border-t border-slate-100 space-y-2.5 animate-fade-in">
+                            <!-- JS 动态原位渲染资产卡片 -->
+                        </div>
+                    </div>
+
+                    <!-- 客户情感与属性 -->
+                    <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                        <div class="text-[14px] font-extrabold text-slate-500 uppercase tracking-wider">客户情感与属性</div>
+                        <div class="flex flex-wrap gap-2.5">
+                            <span class="tag-pill bg-amber-50 text-amber-800 border border-amber-200">高关注客群</span>
+                            <span class="tag-pill bg-rose-50 text-rose-700 border border-rose-200">曾拒缴沟通</span>
+                            <span class="tag-pill bg-slate-100 text-slate-700 border border-slate-200">20点后沟通</span>
+                            <span class="tag-pill bg-indigo-50 text-indigo-700 border border-indigo-200">山西籍贯</span>
+                        </div>
+                    </div>
+
+                    <!-- 专属备注档案 -->
+                    <div class="space-y-3">
+                        <div class="flex justify-between items-center px-1">
+                            <span class="text-[14px] font-extrabold text-slate-500 uppercase tracking-wider">专属备注档案</span>
+                            <span onclick="openNoteModal('person')" class="text-brand font-bold text-[13px] flex items-center gap-1 active:opacity-50 cursor-pointer">
+                                <i data-lucide="plus" class="w-4 h-4"></i> 添加备注
+                            </span>
+                        </div>
+                        <!-- 备注左右横向滑动容器 -->
+                        <div id="person-notes-list" class="flex gap-4 overflow-x-auto pb-3 snap-x snap-mandatory scroll-smooth w-full select-none">
+                            <!-- JS 自动动态渲染备注卡片 -->
                         </div>
                     </div>
 
                     <!-- 同住关系图谱 -->
-                    <div class="space-y-2.5">
-                        <div class="text-[12px] font-bold text-slate-400 flex justify-between items-center px-1">
-                            <span>同住/租住图谱</span>
-                            <button onclick="openMemberModal('新增')" class="text-indigo-600 flex items-center gap-1 text-[12px] font-bold bg-white shadow-sm px-3 py-1.5 rounded-lg active:scale-95 border border-indigo-100">
-                                <i data-lucide="user-plus" class="w-3.5 h-3.5 pointer-events-none"></i> <span class="pointer-events-none">添加成员</span>
+                    <div class="space-y-3 pt-2">
+                        <div class="text-[14px] font-extrabold text-slate-500 uppercase tracking-wider flex justify-between items-center px-1">
+                            <span>同住人员图谱</span>
+                            <button onclick="openMemberModal('新增', '', '', '', '', '')" class="text-brand flex items-center gap-1 text-[13px] font-bold bg-blue-50 border border-blue-200 px-3 py-1.5 rounded-lg active:scale-95">
+                                <i data-lucide="user-plus" class="w-4 h-4"></i> 添加成员
                             </button>
                         </div>
-                        <div class="space-y-2.5" id="member-list">
-                            <!-- 同住人卡片自动注入 -->
+                        <div class="space-y-3" id="member-list">
+                            <!-- JS 自动注入 -->
                         </div>
                     </div>
                 </div>
 
-                <!-- ==================== 【房】轴：资产档案 (翠绿勾边) ==================== -->
-                <div id="content-property" class="p-4 space-y-4 hidden">
-                    <!-- 基本物理房源卡 -->
-                    <div class="bg-white border-l-4 border-l-accentProperty border border-slate-200/50 p-4 rounded-2xl shadow-sm relative overflow-hidden">
-                        <div class="flex items-center gap-3.5 mb-3">
-                            <div class="w-10 h-10 bg-emerald-50 border border-emerald-100 rounded-full flex items-center justify-center text-emerald-600"><i data-lucide="home" class="w-5 h-5 pointer-events-none"></i></div>
-                            <div>
-                                <h4 class="text-[16px] font-bold text-slate-800">青山项目 3栋-1单元-102</h4>
-                                <p class="text-[12px] text-slate-400 font-medium mt-0.5">三室两厅双卫 · 128㎡</p>
-                            </div>
+                <!-- ==================== 【房】轴：资产档案 ==================== -->
+                <div id="content-property" class="space-y-6 hidden animate-fade-in">
+                    
+                    <div class="bg-white border border-slate-200 p-5 rounded-2xl shadow-sm relative overflow-hidden">
+                        <div class="absolute top-0 left-0 w-1.5 h-full bg-emerald-500"></div>
+                        <div class="pl-2">
+                            <h4 class="text-[22px] font-black text-slate-800" id="property-details-title">3栋-1单元-102</h4>
+                            <p class="text-[15px] text-slate-500 font-bold mt-1.5">青山项目 · 128㎡ · 三室两厅</p>
                         </div>
-                        <div class="flex items-center justify-between border-t border-slate-50 pt-3">
-                            <button id="status-btn" onclick="openStatusSheet()" class="tag-pill bg-emerald-50 text-emerald-800 border border-emerald-200 py-1 text-[12px] active:scale-95 transition-all">
-                                <i data-lucide="home" class="w-3.5 h-3.5 pointer-events-none"></i> <span id="current-housing-status" class="pointer-events-none">状态：自住</span> <i data-lucide="chevron-down" class="w-3.5 h-3.5 opacity-60 pointer-events-none"></i>
+                        <div class="flex items-center gap-3 mt-5 pt-5 border-t border-slate-100">
+                            <!-- 房屋状态按钮 -->
+                            <button id="status-btn" onclick="openStatusSheet()" class="min-h-[40px] px-4 rounded-xl bg-emerald-50 text-emerald-800 text-[15px] font-extrabold active:scale-95 transition-all border border-emerald-200 flex items-center gap-1.5">
+                                <i data-lucide="home" class="w-4 h-4"></i> <span id="current-housing-status">当前状态：自住</span> <i data-lucide="chevron-down" class="w-4 h-4 ml-1 opacity-60"></i>
                             </button>
-                            <span class="text-[12px] text-slate-500 font-semibold bg-slate-50 border border-slate-100 px-2 py-0.5 rounded">装修底档: 无异常</span>
                         </div>
                     </div>
 
-                    <!-- 房屋物理与工程隐患 -->
-                    <div class="bg-white p-4 rounded-2xl border border-slate-200/50 shadow-sm space-y-2.5">
-                        <div class="text-[12px] font-bold text-slate-400 tracking-wider">客观隐患档案 (随房过户不销档)</div>
-                        <div class="flex flex-wrap gap-2">
-                            <span class="tag-pill bg-rose-50 text-rose-700 border border-rose-200 shadow-sm font-bold">
-                                <i data-lucide="droplets" class="w-3.5 h-3.5 animate-bounce text-rose-500"></i> 顶楼天花板渗漏历史
-                            </span>
-                            <span class="tag-pill bg-slate-100 text-slate-700 border border-slate-200 font-medium">
-                                <i data-lucide="wind" class="w-3.5 h-3.5 text-emerald-500"></i> 烟道反味 (已修)
-                            </span>
-                            <span class="tag-pill bg-slate-100 text-slate-700 border border-slate-200 font-medium">
-                                <i data-lucide="wrench" class="w-3.5 h-3.5 text-amber-500"></i> 地暖主管压差异常
-                            </span>
+                    <!-- 客观隐患档案 -->
+                    <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                        <div class="text-[14px] font-extrabold text-slate-500 uppercase tracking-wider flex justify-between items-center">
+                            <span>客观隐患档案</span>
+                            <span class="text-[11px] text-rose-500 bg-rose-50 px-2 py-0.5 rounded font-bold border border-rose-100">随房不销档</span>
+                        </div>
+                        <div class="flex flex-wrap gap-2.5">
+                            <span class="tag-pill bg-rose-50 text-rose-700 border border-rose-200">地暖主管异常</span>
+                            <span class="tag-pill bg-orange-50 text-orange-700 border border-orange-200">天花板渗漏历史</span>
+                            <span class="tag-pill bg-slate-100 text-slate-700 border border-slate-200">烟道反味(已修)</span>
                         </div>
                     </div>
 
-                    <!-- 【房备注】 -->
-                    <div class="space-y-2.5">
+                    <div class="space-y-3">
                         <div class="flex justify-between items-center px-1">
-                            <span class="text-[12px] font-bold text-slate-400">工程缺陷追踪底卡</span>
-                            <button onclick="openNoteModal('property')" class="text-emerald-700 flex items-center gap-1 text-[12px] font-bold bg-white shadow-sm px-3 py-1.5 rounded-lg active:scale-95 border border-emerald-100">
-                                <i data-lucide="hammer" class="w-3.5 h-3.5 pointer-events-none"></i> <span class="pointer-events-none">登记工程档案</span>
-                            </button>
+                            <span class="text-[14px] font-extrabold text-slate-500 uppercase tracking-wider">工程缺陷追踪底卡</span>
                         </div>
-                        
-                        <div id="property-notes-list" class="space-y-2.5">
-                            <div class="bg-white border-l-4 border-l-emerald-400 border-y border-r border-slate-200/60 rounded-xl p-3.5 shadow-sm">
-                                <div class="flex justify-between items-center mb-1.5">
-                                    <span class="text-[11px] bg-rose-50 text-rose-600 font-semibold px-2 py-0.5 rounded border border-rose-100">质量隐患</span>
-                                    <span class="text-[11px] text-slate-400 font-mono">2025-11-15 11:20</span>
+                        <div id="property-notes-list" class="space-y-3">
+                            <div class="bg-white border-l-[4px] border-l-rose-500 border border-slate-200 rounded-2xl p-4 shadow-sm">
+                                <div class="flex items-center justify-between mb-3">
+                                    <span class="text-[12px] bg-rose-50 text-rose-700 font-bold px-2 py-0.5 rounded border border-rose-100">质量隐患</span>
+                                    <span class="text-[12px] text-slate-400 font-mono font-bold">25-11-15</span>
                                 </div>
-                                <p class="text-[13px] text-slate-600 leading-relaxed font-medium">
-                                    主卧阳台外墙由于雨水管道开裂引发大面积渗漏。虽已于25年底注浆修补，但由于原保温层部分霉变，仍存在二次剥落隐患。汛期务必提前检查。
+                                <p class="text-[15px] text-slate-800 leading-[1.6] font-medium">
+                                    主卧阳台外墙管道大面积渗漏。虽已于25年底注浆修补，但保温层霉变，存在二次剥落隐患。汛期务必检查。
                                 </p>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- ==================== 【事】轴：业务跟进 (丹砂/橙黄 强烈边界) ==================== -->
-                <div id="content-events" class="p-4 space-y-4 hidden">
-                    <!-- 欠费大牌 (立体红线) -->
+                <!-- ==================== 【事】轴：业务跟进 ==================== -->
+                <div id="content-events" class="space-y-6 hidden animate-fade-in">
+                    
                     <div>
-                        <div class="text-[12px] font-bold text-slate-400 mb-2 px-1">财务账单 (实时状态)</div>
-                        <div class="bg-gradient-to-r from-rose-500 to-rose-600 border border-rose-600 rounded-2xl p-4 flex justify-between items-center shadow-lg relative overflow-hidden">
-                            <div class="absolute -right-6 -bottom-6 opacity-10"><i data-lucide="receipt" class="w-24 h-24 text-white pointer-events-none"></i></div>
-                            <div class="flex items-center gap-3">
+                        <div class="text-[14px] font-extrabold text-slate-500 uppercase tracking-wider mb-3 px-1">财务监控 (待清算)</div>
+                        <div class="bg-rose-50 border border-rose-200 rounded-2xl p-5 flex justify-between items-center shadow-sm">
+                            <div class="flex items-center gap-4">
+                                <div class="w-12 h-12 rounded-full bg-rose-100 flex items-center justify-center shrink-0">
+                                    <i data-lucide="alert-circle" class="w-6 h-6 text-rose-600"></i>
+                                </div>
                                 <div>
-                                    <div class="text-[17px] font-bold text-white flex items-center gap-1.5">
-                                        累计欠费 5 个月
-                                        <span class="bg-white/25 text-[11px] px-2 py-0.5 rounded text-white font-extrabold">高危催收</span>
-                                    </div>
-                                    <div class="text-[14px] text-rose-100 font-mono mt-0.5 font-bold">待收总额: ¥2,450.00</div>
+                                    <div class="text-lg font-extrabold text-rose-700">欠费 5 个月</div>
+                                    <div class="text-[14px] text-rose-600 font-mono mt-0.5 font-bold">累计欠款: ¥2,450.00</div>
                                 </div>
                             </div>
-                            <!-- 🚀 优化重点：整个按钮区域作为高敏控热区，加入 pointer-events-none 子元素防护 -->
-                            <button class="bg-white text-rose-700 text-[13px] font-bold px-3.5 py-2.5 rounded-xl shadow-md active:scale-95 flex items-center gap-1.5 transition-all select-none" onclick="generateBill()">
-                                <i data-lucide="receipt" class="w-4 h-4 text-rose-600 pointer-events-none"></i>
-                                <span class="pointer-events-none">AI催费</span>
+                            <button class="bg-rose-600 text-white text-[15px] font-bold px-4 py-2.5 rounded-xl shadow-md active:scale-95 flex items-center gap-1.5 shrink-0" onclick="generateBill()">
+                                <i data-lucide="receipt" class="w-4 h-4"></i> AI催费
                             </button>
                         </div>
                     </div>
 
-                    <!-- 当前报事工单 (事 - 橙黄警告色) -->
                     <div>
-                        <div class="text-[12px] font-bold text-slate-400 mb-2 px-1">活跃工单</div>
-                        <div class="bg-white border border-slate-200/80 rounded-2xl p-4 shadow-sm relative overflow-hidden border-l-4 border-l-amber-500">
-                            <div class="flex items-center justify-between gap-2 mb-1.5">
-                                <span class="bg-amber-50 text-amber-700 text-[10px] px-1.5 py-0.5 rounded border border-amber-200 font-bold">保洁主管限时办结</span>
-                                <span class="text-[11px] font-mono text-slate-400">工单: GD2026052401</span>
+                        <div class="text-[14px] font-extrabold text-slate-500 uppercase tracking-wider mb-3 px-1">活跃工单</div>
+                        <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm border-l-[4px] border-l-amber-500">
+                            <div class="flex justify-between items-start mb-3">
+                                <span class="bg-amber-50 text-amber-800 text-[12px] px-2 py-1 rounded border border-amber-200 font-extrabold">限时督办</span>
+                                <span class="text-[13px] font-mono font-bold text-slate-400">GD20260524</span>
                             </div>
-                            <h5 class="text-[14px] font-bold text-slate-800">楼道连续三天保洁未彻底打扫</h5>
-                            <p class="text-[12px] text-slate-500 mt-1 font-medium leading-relaxed">业主在微信发起强烈保洁投诉，已派单清洁班组长现场核查，整改情况正在处理中。</p>
+                            <h5 class="text-[17px] font-black text-slate-900 mb-2">楼道连续三天保洁未彻底打扫</h5>
+                            <p class="text-[15px] text-slate-600 font-medium leading-[1.6]">业主发起强烈保洁投诉，已派单清洁组长现场核查，整改中。</p>
                         </div>
                     </div>
 
-                    <!-- 近期跟进历史 -->
                     <div>
-                        <div class="text-[12px] font-bold text-slate-400 mb-3 px-1">服务跟进轨迹</div>
-                        <div class="border-l-2 border-slate-300 ml-4 space-y-4">
-                            <div class="relative pl-5">
-                                <div class="absolute w-3.5 h-3.5 bg-rose-100 rounded-full -left-[8px] top-1 border-[2.5px] border-rose-500 shadow-sm animate-pulse"></div>
-                                <div class="text-[12px] text-slate-400 font-mono mb-1 font-medium">今天 10:24 · 自动记录</div>
-                                <div class="bg-white border border-slate-200/50 rounded-xl p-3.5 text-[13px] text-slate-600 shadow-sm leading-relaxed font-medium">
-                                    业主发起企微保洁投诉，已触发高关注客情防爆预警。
+                        <div class="text-[14px] font-extrabold text-slate-500 uppercase tracking-wider mb-3 px-1">服务时间轴</div>
+                        <div class="border-l-[3px] border-slate-200 ml-4 space-y-5">
+                            <div class="relative pl-6">
+                                <div class="absolute w-4 h-4 bg-rose-500 rounded-full -left-[10px] top-1 border-[4px] border-slate-50 shadow-sm"></div>
+                                <div class="text-[14px] text-rose-500 font-mono mb-1.5 font-black">今天 10:24 · 红色预警</div>
+                                <div class="bg-white border border-slate-200 rounded-2xl p-4 text-[15px] text-slate-800 font-medium leading-[1.6] shadow-sm">
+                                    业主发起高危情绪单聊投诉，包含敏感客情标签，请立即关注。
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-
-                <!-- ==================== 🚀 独立的新访客空置状态页 ==================== -->
-                <div id="workbench-empty-view" class="hidden flex-col items-center justify-center px-6 py-16 text-center">
-                    <div class="w-20 h-20 bg-slate-100 rounded-full flex items-center justify-center mb-5 border border-slate-200 shadow-sm relative">
-                        <i data-lucide="user-plus" class="w-8 h-8 text-slate-400"></i>
-                    </div>
-                    <h3 class="text-[17px] font-bold text-slate-800 mb-2">未关联物理资产</h3>
-                    <p class="text-[13px] text-slate-500 mb-8 leading-relaxed font-medium">
-                        当前联系人无挂载名下资产。请关联实际居住 of the 房产、车位或储物间，以解锁数据档案。
-                    </p>
-                    
-                    <button onclick="openBindModal()" class="w-full max-w-[220px] bg-slate-800 text-white font-bold py-3.5 rounded-xl shadow-md hover:bg-slate-900 active:scale-95 transition-all flex items-center justify-center gap-2">
-                        <i data-lucide="link" class="w-4 h-4 pointer-events-none"></i>
-                        <span class="pointer-events-none">挂载资产</span>
-                    </button>
-                </div>
-
             </div>
 
-            <!-- 底部统一语音入口 (Z-Index 置顶保证在主内容之上) -->
-            <div class="absolute bottom-0 left-0 right-0 bg-white border-t border-slate-150 px-4 pt-3 pb-6 shadow-[0_-5px_25px_rgba(0,0,0,0.06)] z-20">
-                <div class="flex gap-2.5">
-                    <button id="mic-btn-owner" onmousedown="startRecordOwner(event)" onmouseup="stopRecordOwner(event)" onmouseleave="cancelRecordOwner(event)" ontouchstart="startRecordOwner(event)" ontouchend="stopRecordOwner(event)" class="flex-1 bg-slate-100 text-slate-700 border border-slate-200 rounded-xl py-3.5 flex items-center justify-center gap-2 text-[14px] font-bold shadow-sm active:scale-[0.98] active:bg-slate-200 transition-all select-none">
+            <!-- 底部统一交互区 -->
+            <div class="absolute bottom-0 left-0 right-0 bg-white border-t border-slate-200 px-5 pt-4 pb-8 shadow-[0_-10px_30px_rgba(0,0,0,0.05)] z-20">
+                <div class="flex gap-3">
+                    <button id="mic-btn-owner" onmousedown="startRecordOwner(event)" onmouseup="stopRecordOwner(event)" onmouseleave="cancelRecordOwner(event)" ontouchstart="startRecordOwner(event)" ontouchend="stopRecordOwner(event)" class="flex-1 bg-slate-900 text-white rounded-2xl py-4 flex items-center justify-center gap-2 text-[16px] font-bold shadow-lg hover:bg-black active:scale-[0.98] active:bg-brand transition-all select-none">
                         <div id="mic-content-owner" class="flex items-center justify-center gap-2 pointer-events-none">
-                            <i data-lucide="mic" class="w-5 h-5 text-slate-600"></i>
-                            <span id="lui-button-text">按住 语音登记</span>
+                            <i data-lucide="mic" class="w-6 h-6"></i>
+                            <span id="lui-button-text">按住 录入客情</span>
                         </div>
                     </button>
-                    <button class="w-14 bg-slate-800 text-white rounded-xl flex items-center justify-center border border-slate-800 shadow-md active:scale-95 hover:bg-slate-900" onclick="closeWorkbench()">
-                        <i data-lucide="message-square" class="w-5 h-5 pointer-events-none"></i>
+                    <button onclick="handlePencilClick()" class="w-16 bg-blue-50 text-brand rounded-2xl flex items-center justify-center border border-blue-200 active:scale-95">
+                        <i data-lucide="edit-3" class="w-6 h-6"></i>
                     </button>
                 </div>
             </div>
         </div>
 
-        <!-- Z-Index 60+ 顶层 Toast 及二次输入弹窗集合 -->
-        <div id="toast-owner" class="absolute bottom-[100px] left-1/2 transform -translate-x-1/2 w-[90%] bg-slate-800/95 backdrop-blur text-white text-[14px] py-3.5 px-4 rounded-xl shadow-xl flex items-center justify-between opacity-0 pointer-events-none transition-all duration-300 translate-y-4 z-[80]">
+        <!-- Z-Index 60+ 顶层弹窗集合 -->
+        
+        <!-- Toast 通知 -->
+        <div id="toast-owner" class="absolute bottom-[120px] left-1/2 transform -translate-x-1/2 w-[90%] bg-slate-800/95 backdrop-blur text-white text-[15px] py-4 px-5 rounded-2xl shadow-xl flex items-center justify-between opacity-0 pointer-events-none transition-all duration-300 translate-y-4 z-[90]">
             <div class="flex items-center gap-2.5 overflow-hidden">
-                <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400 shrink-0"></i>
-                <span class="truncate font-medium" id="toast-owner-msg">已更新特征数据</span>
+                <i data-lucide="check-circle-2" class="w-5 h-5 text-emerald-400 shrink-0"></i>
+                <span class="truncate font-medium" id="toast-owner-msg">操作成功</span>
             </div>
-            <button onclick="undoActionOwner()" class="text-slate-300 font-bold shrink-0 ml-3 hover:text-white transition-colors">撤销</button>
+            <button onclick="undoActionOwner()" class="text-blue-300 font-extrabold shrink-0 ml-3">撤销</button>
         </div>
 
-        <!-- 房屋状态极速切换弹窗 -->
-        <div id="status-sheet" class="absolute bottom-0 left-0 right-0 bg-white rounded-t-[32px] shadow-[0_-15px_40px_rgba(0,0,0,0.15)] z-[65] transform translate-y-full transition-transform duration-300 px-5 pt-5 pb-10 border-t border-slate-100">
-            <div class="flex justify-between items-center mb-5">
-                <h3 class="text-[17px] font-bold text-slate-800">资产使用状态</h3>
-                <button onclick="closeStatusSheet()" class="w-8 h-8 bg-slate-100 rounded-full flex items-center justify-center text-slate-500"><i data-lucide="x" class="w-4 h-4 pointer-events-none"></i></button>
+        <!-- 房屋状态切换弹窗 -->
+        <div id="status-sheet" class="absolute bottom-0 left-0 right-0 bg-white rounded-t-[36px] shadow-[0_-15px_40px_rgba(0,0,0,0.12)] z-[65] transform translate-y-full transition-transform duration-300 px-6 pt-6 pb-12 border-t border-slate-200">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-[20px] font-black text-slate-800">更改资产状态</h3>
+                <button onclick="closeStatusSheet()" class="w-9 h-9 bg-slate-100 rounded-full flex items-center justify-center text-slate-600 active:scale-95"><i data-lucide="x" class="w-5 h-5"></i></button>
             </div>
-            <div class="grid grid-cols-2 gap-3">
-                <button onclick="changeHousingStatus('未接房', 'bg-slate-50 text-slate-700 border-slate-200')" class="p-3.5 border border-slate-200 rounded-xl flex items-center gap-2 hover:bg-slate-50 text-slate-700 active:scale-95 transition-all">
-                    <i data-lucide="key" class="w-4 h-4 text-slate-400 pointer-events-none"></i> <span class="text-[14px] font-bold pointer-events-none">未接房</span>
+            <div class="grid grid-cols-2 gap-4">
+                <button onclick="changeHousingStatus('未接房', 'bg-slate-50 text-slate-700 border-slate-200')" class="py-4 border border-slate-200 rounded-2xl flex items-center justify-center gap-2 hover:bg-slate-50 text-slate-700 active:scale-95 transition-all">
+                    <i data-lucide="key" class="w-5 h-5 text-slate-500"></i> <span class="text-[16px] font-bold">未接房</span>
                 </button>
-                <button onclick="changeHousingStatus('空置', 'bg-slate-50 text-slate-700 border-slate-200')" class="p-3.5 border border-slate-200 rounded-xl flex items-center gap-2 hover:bg-slate-50 text-slate-700 active:scale-95 transition-all">
-                    <i data-lucide="wind" class="w-4 h-4 text-slate-400 pointer-events-none"></i> <span class="text-[14px] font-bold pointer-events-none">空置</span>
+                <button onclick="changeHousingStatus('空置', 'bg-amber-50 text-amber-800 border-amber-300')" class="py-4 border border-slate-200 rounded-2xl flex items-center justify-center gap-2 hover:bg-slate-50 text-slate-700 active:scale-95 transition-all">
+                    <i data-lucide="wind" class="w-5 h-5 text-amber-500"></i> <span class="text-[16px] font-bold">空置</span>
                 </button>
-                <button onclick="changeHousingStatus('自住', 'bg-slate-50 text-slate-700 border-slate-200')" class="p-3.5 border border-slate-800 bg-slate-800 text-white rounded-xl flex items-center gap-2 active:scale-95 shadow-md transition-all" id="btn-status-self">
-                    <i data-lucide="home" class="w-4 h-4 pointer-events-none"></i> <span class="text-[14px] font-bold pointer-events-none">自住 (当前)</span>
+                <button onclick="changeHousingStatus('自住', 'bg-emerald-50 text-emerald-800 border-emerald-300')" class="py-4 bg-slate-900 text-white rounded-2xl flex items-center justify-center gap-2 active:scale-95 shadow-md transition-all" id="btn-status-self">
+                    <i data-lucide="home" class="w-5 h-5"></i> <span class="text-[16px] font-bold">自住 (当前)</span>
                 </button>
-                <button onclick="changeHousingStatus('出租', 'bg-slate-50 text-slate-700 border-slate-200')" class="p-3.5 border border-slate-200 rounded-xl flex items-center gap-2 hover:bg-slate-50 text-slate-700 active:scale-95 transition-all">
-                    <i data-lucide="users" class="w-4 h-4 text-slate-400 pointer-events-none"></i> <span class="text-[14px] font-bold pointer-events-none">出租</span>
+                <button onclick="changeHousingStatus('出租', 'bg-purple-50 text-purple-800 border-purple-300')" class="py-4 border border-slate-200 rounded-2xl flex items-center justify-center gap-2 hover:bg-slate-50 text-slate-700 active:scale-95 transition-all">
+                    <i data-lucide="users" class="w-5 h-5 text-purple-500"></i> <span class="text-[16px] font-bold">出租</span>
                 </button>
             </div>
         </div>
 
-        <!-- 🚀 写人备注 / 写房备注 统一录入框 -->
-        <div id="note-modal" class="absolute inset-x-4 top-[20%] bg-white rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.15)] border border-slate-100 p-5 opacity-0 pointer-events-none transition-all duration-300 scale-95 z-[70]">
-            <h3 class="text-[17px] font-bold text-slate-800 mb-1.5 flex items-center gap-2">
-                <i data-lucide="edit-3" class="w-4 h-4 text-slate-600 pointer-events-none" id="note-modal-icon"></i>
-                <span id="note-modal-title" class="pointer-events-none">添加记录</span>
-            </h3>
-            <p class="text-[12px] text-slate-400 mb-4" id="note-modal-subtitle">记录将安全留存在底层节点上</p>
+        <!-- 记笔记 Modal -->
+        <div id="note-modal" class="absolute inset-x-4 top-[15%] bg-white rounded-3xl shadow-2xl border border-slate-200 p-6 opacity-0 pointer-events-none transition-all duration-300 scale-95 z-[70]">
+            <h3 class="text-xl font-extrabold text-slate-800 mb-2" id="note-modal-title">添加记录</h3>
+            <p class="text-[13px] font-bold text-slate-500 mb-5" id="note-modal-subtitle">记录将安全留存在对应节点上</p>
+            <div class="space-y-4">
+                <div id="note-type-toggles" class="flex gap-2"></div>
+                <textarea id="note-textarea" rows="4" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 text-[15px] font-medium text-slate-800 focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand leading-[1.6]" placeholder="输入记录明细..."></textarea>
+            </div>
+            <div class="flex gap-3 mt-6">
+                <button class="flex-1 bg-slate-100 text-slate-700 py-3.5 rounded-xl font-extrabold text-[15px] active:scale-95 transition-all" onclick="closeNoteModal()">取消</button>
+                <button class="flex-1 bg-brand text-white py-3.5 rounded-xl font-extrabold text-[15px] active:scale-95 transition-all shadow-md" onclick="saveNoteModal()">保存</button>
+            </div>
+        </div>
+
+        <!-- 微信高保真待办提醒 Modal -->
+        <div id="todo-modal" class="absolute inset-x-4 top-[10%] bg-white rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.15)] border border-slate-200 p-6 opacity-0 pointer-events-none transition-all duration-300 scale-95 z-[75]">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-xl font-black text-slate-800">设置提醒时间</h3>
+            </div>
             <div class="space-y-4">
                 <div>
-                    <div class="flex gap-2" id="note-type-toggles">
-                        <!-- 动态高亮 -->
+                    <label class="text-[14px] text-slate-600 font-extrabold mb-1.5 block">待办提醒内容</label>
+                    <textarea id="todo-textarea" rows="2" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 text-[15px] font-bold text-slate-800 focus:outline-none focus:border-[#07c160] focus:ring-1 focus:ring-[#07c160] leading-[1.6]" placeholder="例如：联系工程部下午2点复核阳台外墙渗漏问题"></textarea>
+                </div>
+                
+                <div>
+                    <label class="text-[14px] text-slate-600 font-extrabold mb-1.5 block">提醒时间</label>
+                    <div class="bg-white border border-slate-200 rounded-2xl p-4 flex flex-col items-center justify-center cursor-pointer active:bg-slate-50 transition-colors shadow-sm relative overflow-hidden select-none" onclick="toggleWeChatWheelPicker()">
+                        <div class="flex items-center gap-2 justify-center w-full min-h-[44px]">
+                            <span id="wechat-time-display" class="text-[18px] font-black text-slate-900">今天 周日 21:40</span>
+                            <i data-lucide="chevron-down" id="wechat-picker-chevron" class="w-5 h-5 text-slate-400 transition-transform duration-300"></i>
+                        </div>
+
+                        <!-- 微信联动高保真滚动轮 -->
+                        <div id="wechat-wheel-picker" class="hidden w-full mt-3 pt-3 border-t border-slate-100 flex flex-col items-center space-y-1 text-[15px] font-bold text-slate-400/60 animate-fade-in select-none">
+                            <div class="py-1 opacity-40 text-[14px]" id="wheel-item-prev">今天 周日 20:40</div>
+                            <div class="py-2.5 text-[17px] text-slate-800 bg-slate-100 w-full text-center rounded-xl border border-slate-200/80 font-black" id="wheel-item-active">今天 周日 21:40</div>
+                            <div class="py-1 opacity-40 text-[14px]" id="wheel-item-next">明天 周一 22:40</div>
+                        </div>
                     </div>
                 </div>
-                <div>
-                    <textarea id="note-textarea" rows="4" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-[14px] text-slate-800 focus:outline-none focus:border-slate-400 focus:bg-white transition-colors leading-relaxed" placeholder="输入记录明细..."></textarea>
+
+                <!-- WeChat 快捷键网格 -->
+                <div class="grid grid-cols-2 gap-3 pt-1">
+                    <button onclick="setWeChatQuickTime(5, this)" id="btn-quick-5s" class="py-3 px-4 min-h-[50px] rounded-xl text-[15px] font-extrabold text-slate-800 border-2 border-slate-200 bg-slate-50 active:scale-95 transition-all text-center">
+                        5秒后 (演示)
+                    </button>
+                    <button onclick="setWeChatQuickTime(3600, this)" id="btn-quick-1h" class="py-3 px-4 min-h-[50px] rounded-xl text-[15px] font-extrabold text-slate-800 border-2 border-slate-200 bg-slate-50 active:scale-95 transition-all text-center">
+                        1小时后
+                    </button>
+                    <button onclick="setWeChatQuickTime(86400, this)" id="btn-quick-1d" class="py-3 px-4 min-h-[50px] rounded-xl text-[15px] font-extrabold text-slate-800 border-2 border-slate-200 bg-slate-50 active:scale-95 transition-all text-center">
+                        1天后
+                    </button>
+                    <button onclick="setWeChatQuickTime(604800, this)" id="btn-quick-1w" class="py-3 px-4 min-h-[50px] rounded-xl text-[15px] font-extrabold text-slate-800 border-2 border-slate-200 bg-slate-50 active:scale-95 transition-all text-center">
+                        1周后
+                    </button>
                 </div>
             </div>
-            <div class="flex gap-2.5 mt-5">
-                <button class="flex-1 bg-white border border-slate-200 text-slate-600 py-3 rounded-xl font-bold text-[14px] active:scale-95 transition-all" onclick="closeNoteModal()">取消</button>
-                <button class="flex-1 bg-slate-800 text-white py-3 rounded-xl font-bold text-[14px] active:scale-95 transition-all shadow-md animate-fade-in" onclick="saveNoteModal()">保存</button>
+            
+            <div class="flex gap-4 mt-6">
+                <button class="flex-1 bg-[#f2f2f2] text-slate-800 py-4 rounded-2xl font-extrabold text-[16px] active:scale-95 transition-all" onclick="closeTodoModal()">取消</button>
+                <button class="flex-1 bg-[#07c160] text-white py-4 rounded-2xl font-extrabold text-[16px] active:scale-95 transition-all shadow-md" onclick="saveTodoModal()">设置</button>
+            </div>
+        </div>
+
+        <!-- 微信级关联新资产弹窗 -->
+        <div id="add-asset-modal" class="absolute inset-x-4 top-[12%] bg-white rounded-[32px] shadow-[0_20px_60px_rgba(0,0,0,0.2)] border border-slate-200 p-6 opacity-0 pointer-events-none transition-all duration-300 scale-95 z-[75]">
+            <h3 class="text-xl font-black text-slate-800 mb-2">关联新资产</h3>
+            <p class="text-[13px] font-bold text-slate-500 mb-5">选择旗下资产进行物理关联绑定 (一户多资产管理)</p>
+            
+            <div class="space-y-4">
+                <!-- 资产大类分段选择 -->
+                <div>
+                    <label class="text-[13px] text-slate-600 font-bold mb-1.5 block">资产类型</label>
+                    <div class="bg-slate-100 p-1 flex rounded-xl gap-1 border border-slate-200 shadow-inner">
+                        <button id="btn-asset-type-house" onclick="selectAssetType('房产')" class="flex-1 py-2 text-[14px] font-extrabold rounded-lg transition-all bg-white text-brand shadow-sm">
+                            房产
+                        </button>
+                        <button id="btn-asset-type-parking" onclick="selectAssetType('车位')" class="flex-1 py-2 text-[14px] font-bold rounded-lg transition-all text-slate-500">
+                            车位
+                        </button>
+                        <button id="btn-asset-type-storage" onclick="selectAssetType('储物间')" class="flex-1 py-2 text-[14px] font-bold rounded-lg transition-all text-slate-500">
+                            储物间
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 封闭式项目小区选择 -->
+                <div>
+                    <label class="text-[13px] text-slate-600 font-bold mb-1.5 block">关联小区</label>
+                    <select id="asset-community-select" class="select-clean">
+                        <option value="青山项目">青山项目 (当前)</option>
+                        <option value="阅江府">阅江府一期</option>
+                        <option value="金华项目">金华豪庭</option>
+                    </select>
+                </div>
+
+                <!-- 封闭式资产编号关联 -->
+                <div>
+                    <label class="text-[13px] text-slate-600 font-bold mb-1.5 block">资产编号 (封闭选项)</label>
+                    <select id="asset-id-select" class="select-clean font-mono">
+                        <!-- 动态装填 -->
+                    </select>
+                </div>
+            </div>
+
+            <!-- 双按键 -->
+            <div class="flex gap-3 mt-6">
+                <button class="flex-1 bg-slate-100 text-slate-700 py-3.5 rounded-2xl font-extrabold text-[15px] active:scale-95 transition-all" onclick="closeAddAssetModal()">取消</button>
+                <button class="flex-1 bg-brand text-white py-3.5 rounded-2xl font-extrabold text-[15px] active:scale-95 transition-all shadow-md" onclick="saveAssociatedAsset()">确认关联</button>
             </div>
         </div>
 
         <!-- 成员信息编辑 Modal -->
-        <div id="member-modal" class="absolute inset-x-4 top-[10%] bg-white rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.15)] border border-slate-100 p-5 opacity-0 pointer-events-none transition-all duration-300 scale-95 z-[70]">
-            <h3 class="text-[17px] font-bold text-slate-800 mb-4" id="member-modal-title">同住人员档案</h3>
-            <div class="space-y-3.5">
+        <div id="member-modal" class="absolute inset-x-4 top-[10%] bg-white rounded-3xl shadow-2xl border border-slate-200 p-6 opacity-0 pointer-events-none transition-all duration-300 scale-95 z-[70]">
+            <h3 class="text-xl font-extrabold text-slate-800 mb-5" id="member-modal-title">同住人员档案</h3>
+            <div class="space-y-4">
                 <div>
-                    <label class="text-[12px] text-slate-500 font-bold mb-1 block">姓名/称呼</label>
-                    <input type="text" id="member-name" class="select-clean" placeholder="例如：李先生">
+                    <label class="text-[13px] text-slate-600 font-bold mb-1.5 block">姓名/称呼</label>
+                    <input type="text" id="member-name" class="select-clean" placeholder="李先生">
                 </div>
                 <div>
-                    <label class="text-[12px] text-slate-500 font-bold mb-1 block">身份标签</label>
+                    <label class="text-[13px] text-slate-600 font-bold mb-1.5 block">身份标签</label>
                     <select id="member-role" class="select-clean">
                         <option value="业主本人">业主本人</option>
                         <option value="家属/同住人">家属/同住人</option>
                         <option value="租客">租客</option>
-                        <option value="中介/委托人">中介/委托人</option>
+                        <option value="中介/代理人">中介/代理人</option>
                     </select>
                 </div>
-                <div class="grid grid-cols-2 gap-3">
+                <div class="grid grid-cols-2 gap-4">
                     <div>
-                        <label class="text-[12px] text-slate-500 font-bold mb-1 block">联系电话</label>
-                        <input type="tel" id="member-phone" class="select-clean font-mono" placeholder="138****0000">
+                        <label class="text-[13px] text-slate-600 font-bold mb-1.5 block">电话</label>
+                        <input type="tel" id="member-phone" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 text-[15px] text-slate-800 focus:outline-none focus:border-brand font-mono focus:ring-1 focus:ring-brand" placeholder="138****">
                     </div>
                     <div>
-                        <label class="text-[12px] text-slate-500 font-bold mb-1 block">微信号</label>
-                        <input type="text" id="member-wechat" class="select-clean font-mono" placeholder="选填">
+                        <label class="text-[13px] text-slate-600 font-bold mb-1.5 block">微信</label>
+                        <input type="text" id="member-wechat" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 text-[15px] text-slate-800 focus:outline-none focus:border-brand font-mono focus:ring-1 focus:ring-brand" placeholder="选填">
                     </div>
                 </div>
                 <div>
-                    <label class="text-[12px] text-slate-500 font-bold mb-1 block">备注</label>
-                    <textarea id="member-remark" rows="2" class="select-clean leading-relaxed" placeholder="特殊偏好等..."></textarea>
+                    <label class="text-[13px] text-slate-600 font-bold mb-1.5 block">备注</label>
+                    <textarea id="member-remark" rows="2" class="select-clean leading-[1.6]" placeholder="特殊偏好等..."></textarea>
                 </div>
             </div>
             <div class="flex gap-2.5 mt-6">
-                <button class="flex-1 bg-white border border-slate-200 text-slate-600 py-3 rounded-xl font-bold text-[14px] active:scale-95 transition-all" onclick="closeMemberModal()">取消</button>
-                <button class="flex-1 bg-slate-800 text-white py-3 rounded-xl font-bold text-[14px] active:scale-95 transition-all shadow-md" onclick="saveMemberModal()">保存资料</button>
+                <button class="flex-1 bg-slate-100 border border-transparent text-slate-600 py-3 rounded-xl font-bold text-[14px] active:scale-95 transition-all" onclick="closeMemberModal()">取消</button>
+                <button class="flex-1 bg-[#1C1C1E] text-white py-3 rounded-xl font-bold text-[14px] active:scale-95 transition-all shadow-md" onclick="saveMemberModal()">保存资料</button>
             </div>
         </div>
 
-        <!-- 🚀 跨项目资产关联图 (抽屉页面，VI强化) -->
-        <div id="asset-map-sheet" class="absolute bottom-0 left-0 right-0 bg-[#F3F4F6] rounded-t-[32px] shadow-[0_-15px_40px_rgba(0,0,0,0.18)] z-[65] transform translate-y-full transition-transform duration-300 flex flex-col max-h-[80%] border-t border-slate-200">
-            <div class="pt-4 pb-3 px-5 flex justify-between items-center relative bg-white rounded-t-[32px] border-b border-slate-150 shrink-0">
-                <h3 class="text-[16px] font-bold text-slate-800 flex items-center gap-1.5">
+        <!-- AI 定制催费账单草稿 Modal -->
+        <div id="bill-modal" class="absolute inset-x-4 top-[20%] bg-white rounded-3xl shadow-2xl border border-slate-200 p-6 opacity-0 pointer-events-none transition-all duration-300 scale-95 z-[80]">
+            <div class="flex items-center justify-between mb-4 border-b border-slate-100 pb-3">
+                <h3 class="text-lg font-extrabold text-slate-800 flex items-center gap-2">
+                    <i data-lucide="bot" class="w-5 h-5 text-brand"></i> AI 智能催收拟定
+                </h3>
+                <span id="bill-status" class="text-[12px] text-rose-700 font-bold bg-rose-50 px-2.5 py-1 rounded-md">计算语气中...</span>
+            </div>
+            
+            <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 mb-5 shadow-inner min-h-[120px]">
+                <div class="text-[15px] text-slate-800 leading-[1.6] font-medium">
+                    <span id="bill-typewriter-text"></span><span id="bill-cursor" class="inline-block w-2 h-4 bg-rose-500 ml-0.5 align-middle cursor-blink"></span>
+                </div>
+                <div class="text-[12px] text-amber-700 mt-4 font-bold bg-amber-100 px-2.5 py-1.5 rounded-md inline-block border border-amber-200">
+                    <i data-lucide="sparkles" class="w-3 h-3 inline-block mr-0.5"></i> 已匹配 [历史顶楼漏水] 降温催缴
+                </div>
+            </div>
+            
+            <div class="flex gap-3">
+                <button class="flex-1 bg-slate-100 text-slate-700 py-3.5 rounded-xl font-extrabold text-[15px] active:scale-95 transition-all" onclick="closeBill()">取消</button>
+                <button id="bill-action-btn" class="flex-1 bg-rose-600 text-white py-3.5 rounded-xl font-extrabold text-[15px] active:scale-95 opacity-0 transform translate-y-2 transition-all shadow-md flex items-center justify-center gap-1.5" onclick="fillBillInput()">
+                    <i data-lucide="clipboard-copy" class="w-4 h-4"></i> 一键引用草稿
+                </button>
+            </div>
+        </div>
+
+        <!-- 🚀 跨项目资产关联图 (抽屉页面) -->
+        <div id="asset-map-sheet" class="absolute bottom-0 left-0 right-0 bg-[#F2F2F7] rounded-t-[36px] shadow-[0_-15px_45px_rgba(0,0,0,0.12)] z-[65] transform translate-y-full transition-transform duration-300 flex flex-col max-h-[80%] border-t border-black/[0.02]">
+            <div class="pt-5 pb-3 px-5 flex justify-between items-center relative bg-white rounded-t-[36px] border-b border-black/[0.03] shrink-0">
+                <h3 class="text-[15.5px] font-bold text-slate-800 flex items-center gap-1.5">
                     <i data-lucide="layers" class="w-4 h-4 text-slate-600 pointer-events-none"></i> <span class="pointer-events-none">跨项目资产关联</span>
                 </h3>
-                <button onclick="closeAssetMap()" class="w-8 h-8 bg-slate-100 rounded-full flex items-center justify-center text-slate-500 active:scale-95"><i data-lucide="x" class="w-4 h-4 pointer-events-none"></i></button>
+                <button onclick="closeAssetMap()" class="w-8 h-8 bg-slate-100 rounded-full flex items-center justify-center text-slate-500 active:scale-95"><i data-lucide="x" class="w-3.5 h-3.5 pointer-events-none"></i></button>
             </div>
             
             <div class="overflow-y-auto p-4 space-y-3.5 flex-1 mt-1">
                 <div class="space-y-3">
                     <!-- 青山项目一卡片 (主沟通房) -->
-                    <div class="bg-white border-l-4 border-l-brand border-y border-r border-slate-200 rounded-2xl p-4 relative shadow-md" id="asset-card-1">
-                        <div class="absolute top-0 right-0 bg-brand text-white text-[10px] font-bold px-2 py-1 rounded-bl-xl rounded-tr-2xl flex items-center gap-1">
+                    <div class="bg-white border-l-4 border-l-brand border border-black/[0.03] rounded-2xl p-4 relative shadow-sm" id="asset-card-1">
+                        <div class="absolute top-0 right-0 bg-brand text-white text-[10px] font-bold px-2 py-0.5 rounded-bl-xl rounded-tr-2xl flex items-center gap-1">
                             <i data-lucide="message-square" class="w-3 h-3 pointer-events-none"></i> <span class="pointer-events-none">当前沟通房</span>
                         </div>
                         <div class="flex items-center gap-2 mb-1.5">
-                            <span class="text-[11px] text-slate-500 font-semibold tracking-wide">青山项目</span>
+                            <span class="text-[11px] text-slate-400 font-semibold tracking-wide">青山项目</span>
                         </div>
-                        <div class="text-[16px] font-bold text-slate-800 mb-2">3栋 - 1单元 102</div>
+                        <div class="text-[15.5px] font-bold text-slate-800 mb-2">3栋 - 1单元 102</div>
                         <div class="flex items-center justify-between mt-3 pt-3 border-t border-slate-100">
                             <div class="flex items-center gap-2 text-[12px] text-slate-500 font-medium">
                                 <span class="flex items-center gap-1"><i data-lucide="user-check" class="w-3.5 h-3.5"></i> 业主本人</span>
                                 <span class="text-slate-200">|</span>
                                 <span class="flex items-center gap-1 text-slate-700"><i data-lucide="home" class="w-3.5 h-3.5"></i> 自住</span>
                             </div>
-                            <button onclick="triggerUnbind('青山项目 3栋-102', 'asset-card-1')" class="text-rose-600 text-[12px] font-bold bg-white px-2.5 py-1.5 rounded-lg border border-rose-100 flex items-center gap-1 hover:bg-rose-50 active:scale-95 transition-all shadow-sm">
+                            <button onclick="triggerUnbind('青山项目 3栋-102', 'asset-card-1')" class="text-rose-600 text-[12px] font-bold bg-rose-50 px-2.5 py-1.5 rounded-lg flex items-center gap-1 active:scale-95 transition-all shadow-sm">
                                 <i data-lucide="unlink" class="w-3 h-3 pointer-events-none"></i> <span class="pointer-events-none">解绑房产</span>
                             </button>
                         </div>
                     </div>
 
-                    <!-- 绿岛花园二卡片 (警告勾边) -->
-                    <div class="bg-white border border-slate-200/80 rounded-2xl p-4 shadow-sm relative border-l-4 border-l-rose-400" id="asset-card-2">
+                    <!-- 绿岛花园二卡片 -->
+                    <div class="bg-white border border-black/[0.03] rounded-2xl p-4 shadow-sm relative border-l-4 border-l-rose-500" id="asset-card-2">
                         <div class="flex items-center gap-2 mb-1.5">
-                            <span class="text-[11px] text-slate-500 font-semibold tracking-wide">绿岛花园 (一期)</span>
+                            <span class="text-[11px] text-slate-400 font-semibold tracking-wide">绿岛花园 (一期)</span>
                             <span class="text-[10px] bg-rose-50 text-rose-600 px-1.5 py-0.5 rounded border border-rose-100 font-bold flex items-center gap-0.5"><i data-lucide="alert-circle" class="w-3 h-3"></i> 欠费</span>
                         </div>
-                        <div class="text-[16px] font-bold text-slate-800 mb-2">5栋 - 204室</div>
+                        <div class="text-[15.5px] font-bold text-slate-800 mb-2">5栋 - 204室</div>
                         <div class="flex items-center justify-between mt-3 pt-3 border-t border-slate-100">
                             <div class="flex items-center gap-2 text-[12px] text-slate-500 font-medium">
                                 <span class="flex items-center gap-1"><i data-lucide="user-check" class="w-3.5 h-3.5"></i> 业主本人</span>
@@ -631,8 +695,8 @@
                                 <span class="flex items-center gap-1 text-slate-700"><i data-lucide="users" class="w-3.5 h-3.5"></i> 出租</span>
                             </div>
                             <div class="flex items-center gap-2">
-                                <button onclick="triggerUnbind('绿岛花园 5栋-204', 'asset-card-2')" class="text-rose-600 text-[12px] font-bold bg-white px-2.5 py-1.5 rounded-lg border border-rose-100 flex items-center gap-1 hover:bg-rose-50 active:scale-95 transition-all shadow-sm">
-                                    <i data-lucide="unlink" class="w-3 h-3 pointer-events-none"></i> <span class="pointer-events-none">解绑资产</span>
+                                <button onclick="triggerUnbind('绿岛花园 5栋-204', 'asset-card-2')" class="text-rose-600 text-[12px] font-bold bg-rose-50 px-2.5 py-1.5 rounded-lg flex items-center gap-1 active:scale-95 transition-all shadow-sm">
+                                    <i data-lucide="unlink" class="w-3.5 h-3.5 pointer-events-none"></i> <span class="pointer-events-none">解绑资产</span>
                                 </button>
                             </div>
                         </div>
@@ -640,172 +704,133 @@
                 </div>
 
                 <!-- 关联新卡片入口 -->
-                <button onclick="openBindModal()" class="w-full mt-2 bg-slate-800 text-white hover:bg-slate-900 py-3.5 rounded-xl font-bold text-[14px] flex items-center justify-center gap-2 transition-all active:scale-95 shadow-md">
+                <button onclick="openBindModal()" class="w-full mt-2 bg-[#1C1C1E] text-white hover:bg-black py-3.5 rounded-2xl font-bold text-[13.5px] flex items-center justify-center gap-2 transition-all active:scale-95 shadow-md">
                     <i data-lucide="plus-circle" class="w-4 h-4 pointer-events-none"></i> <span class="pointer-events-none">关联系统预设资产 (房/车/储)</span>
                 </button>
             </div>
         </div>
 
-        <!-- 🚀 新增：AI 定制催费账单草稿 Modal (重写 z-index 和 动效结构) -->
-        <div id="bill-modal" class="absolute inset-x-4 top-[20%] bg-white rounded-3xl shadow-[0_25px_60px_rgba(0,0,0,0.2)] border border-slate-100 p-5 opacity-0 pointer-events-none transition-all duration-300 scale-95 z-[70]">
-            <div class="flex items-center justify-between mb-3 border-b border-slate-100 pb-2">
-                <h3 class="text-[15px] font-bold text-slate-800 flex items-center gap-2">
-                    <i data-lucide="sparkles" class="w-4 h-4 text-rose-500 pointer-events-none"></i> <span class="pointer-events-none">AI 智能账单催缴</span>
-                </h3>
-                <span id="bill-status" class="text-[11px] text-rose-600 font-bold bg-rose-50 px-2 py-0.5 rounded">计算语气中...</span>
-            </div>
-            
-            <div class="bg-slate-50 p-4 rounded-2xl border border-slate-150 mb-4 shadow-inner min-h-[110px] relative">
-                <div class="text-[14px] text-slate-700 leading-relaxed font-medium">
-                    <span id="bill-typewriter-text"></span><span id="bill-cursor" class="inline-block w-1.5 h-4 bg-rose-500 ml-0.5 align-middle cursor-blink"></span>
-                </div>
-                <div class="text-[11px] text-amber-600 mt-3.5 font-bold bg-amber-50 border border-amber-200/50 px-2.5 py-1 rounded inline-block">
-                    ✨ 已匹配 [3栋102 历史顶楼漏水渗水工程档案] 降温催缴
-                </div>
-            </div>
-            
-            <div class="flex gap-2.5">
-                <button class="flex-1 bg-slate-100 text-slate-600 py-3 rounded-xl font-bold text-[13px] active:scale-95 transition-all" onclick="closeBill()">取消</button>
-                <button id="bill-action-btn" class="flex-1 bg-rose-600 text-white py-3 rounded-xl font-bold text-[13px] active:scale-95 transition-all shadow-md flex items-center justify-center gap-1.5 opacity-0 transform translate-y-2" onclick="fillBillInput()">
-                    <i data-lucide="clipboard-copy" class="w-4 h-4 pointer-events-none"></i> <span class="pointer-events-none">一键引用</span>
-                </button>
-            </div>
-        </div>
-
-        <!-- 关联资产具体表单 Modal (强收敛下拉框) -->
-        <div id="bind-property-modal" class="absolute inset-x-4 top-[15%] bg-white rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.15)] border border-slate-100 p-5 opacity-0 pointer-events-none transition-all duration-300 scale-95 z-[70]">
-            <h3 class="text-[17px] font-bold text-slate-800 mb-1.5 flex items-center gap-2">
-                <i data-lucide="link" class="w-4 h-4 text-slate-600 pointer-events-none"></i> <span class="pointer-events-none">关联系统资产</span>
-            </h3>
-            <p class="text-[12px] text-slate-400 mb-4">请从系统预设台账中选择对应的资产进行关联</p>
-            
-            <div class="space-y-3.5">
-                <div>
-                    <label class="text-[12px] text-slate-500 font-bold mb-1 block">选择项目/小区</label>
-                    <div class="relative">
-                        <i data-lucide="search" class="w-4 h-4 absolute left-3 top-3.5 text-slate-400 pointer-events-none"></i>
-                        <select class="select-clean pl-9">
-                            <option value="">青山项目</option>
-                            <option value="">绿岛花园 (一期)</option>
-                            <option value="">嘉信·天府中心</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="grid grid-cols-2 gap-3">
-                    <div>
-                        <label class="text-[12px] text-slate-500 font-bold mb-1 block">资产类型</label>
-                        <select id="bind-asset-type" class="select-clean">
-                            <option value="房产">房产</option>
-                            <option value="车位">车位</option>
-                            <option value="储物间">储物间</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="text-[12px] text-slate-500 font-bold mb-1 block">资产编号</label>
-                        <select id="bind-room-number" class="select-clean">
-                            <option value="" disabled selected>选择编号</option>
-                            <option value="3栋-1单元-102">3栋-1单元-102</option>
-                            <option value="5栋-204室">5栋-204室</option>
-                            <option value="7栋-402">7栋-402</option>
-                            <option value="A区车位-089">A区车位-089</option>
-                            <option value="负一-储物间-12">负一-储物间-12</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="grid grid-cols-2 gap-3">
-                    <div>
-                        <label class="text-[12px] text-slate-500 font-bold mb-1 block">业务身份</label>
-                        <select class="select-clean">
-                            <option value="业主本人">业主本人</option>
-                            <option value="家属/同住">家属/同住</option>
-                            <option value="租客">租客</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="text-[12px] text-slate-500 font-bold mb-1 block">使用状态</label>
-                        <select class="select-clean">
-                            <option value="自住">自住</option>
-                            <option value="空置">空置</option>
-                            <option value="出租">出租</option>
-                            <option value="未接房">未接房</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-
-            <div class="flex gap-2.5 mt-6">
-                <button class="flex-1 bg-white border border-slate-200 text-slate-600 py-3 rounded-xl font-bold text-[14px] active:scale-95 transition-all" onclick="closeBindModal()">取消</button>
-                <button class="flex-1 bg-slate-800 text-white py-3 rounded-xl font-bold text-[14px] active:scale-95 transition-all shadow-md" onclick="savePropertyBind()">确认挂载</button>
-            </div>
-        </div>
-
-        <!-- 危险操作 - 解绑确认框 -->
-        <div id="unbind-confirm-modal" class="absolute inset-x-5 top-[25%] bg-white rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.15)] border border-slate-100 p-5 opacity-0 pointer-events-none transition-all duration-300 scale-95 z-[75]">
-            <div class="w-10 h-10 bg-slate-100 rounded-full flex items-center justify-center mb-3">
-                <i data-lucide="alert-triangle" class="w-5 h-5 text-slate-600"></i>
-            </div>
-            <h3 class="text-[17px] font-bold text-slate-800 mb-2">确认解除资产挂载？</h3>
-            <p class="text-[13px] text-slate-500 mb-5 font-medium leading-relaxed">
-                即将切断该微信与 <span id="unbind-target-name" class="font-bold text-slate-700">xxx</span> 的关联。<br><br>解绑后，该客户的账单和工单将剥离。此操作通常用于房屋买卖或租客到期。
-            </p>
-            <div class="flex gap-2.5">
-                <button class="flex-1 bg-white border border-slate-200 text-slate-600 py-3 rounded-xl font-bold text-[14px] active:scale-95 transition-all" onclick="closeUnbindModal()">取消</button>
-                <button class="flex-1 bg-rose-600 text-white py-3 rounded-xl font-bold text-[14px] active:scale-95 transition-all shadow-md" onclick="executeUnbind()">确认解绑</button>
+        <!-- 🚀 微信级解绑资产二次确认 Modal -->
+        <div id="unbind-confirm-modal" class="absolute inset-x-4 top-[35%] bg-white rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.15)] border border-slate-200 p-6 opacity-0 pointer-events-none transition-all duration-300 scale-95 z-[90]">
+            <h3 class="text-[18px] font-black text-slate-900 mb-2">确认解绑该资产？</h3>
+            <p class="text-[14px] text-slate-500 mb-5 leading-relaxed">解绑后，该资产（<span id="unbind-target-name" class="font-extrabold text-slate-800"></span>）将不再属于王老师名下。该资产对应的财务计费与工单将与此客户独立解耦。</p>
+            <div class="flex gap-3">
+                <button class="flex-1 bg-slate-100 text-slate-700 py-3.5 rounded-2xl font-extrabold text-[15px] active:scale-95 transition-all shadow-inner" onclick="closeUnbindConfirmModal()">取消</button>
+                <button id="confirm-unbind-btn" class="flex-1 bg-rose-600 text-white py-3.5 rounded-2xl font-extrabold text-[15px] active:scale-95 transition-all shadow-md">确认解绑</button>
             </div>
         </div>
 
     </div>
 
-    <!-- 核心交互脚本 -->
     <script>
-        lucide.createIcons();
+        // 确保 Lucide 图标可用时安全创建
+        function safeInitIcons() {
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+            }
+        }
+        
+        window.addEventListener('DOMContentLoaded', safeInitIcons);
 
-        // ======= 模块 1：AI 助手 =======
+        // ======= 基础节点 =======
         const aiBackdrop = document.getElementById('ai-backdrop');
         const aiSheet = document.getElementById('ai-sheet');
         const typeWriterText = document.getElementById('typewriter-text');
         const cursor = document.getElementById('cursor');
         const fillBtn = document.getElementById('fill-btn');
         const aiStatus = document.getElementById('ai-status');
-        
         const mockInput = document.getElementById('mock-input');
-        const extraIcons = document.getElementById('extra-icons');
         const sendBtn = document.getElementById('send-btn');
+        const extraIcons = document.getElementById('extra-icons');
         
         const draftMessage = "王老师您好，您反映的楼道保洁问题我已看到，确实属于我们工作不到位。我已经要求保洁主管5分钟内到现场带清洁班整改，最晚15分钟后给你发送清洁后的实照反馈，抱歉打扰您心情了。";
-        const billDraftMessage = "王老师您好，针对之前注浆的漏水情况我们已建档追踪，下周阴雨天我会提前敲门检查。系统显示账户有2450元出账，还要劳侠您顺手结清，谢谢配合。";
+        const billDraftMessage = "王老师您好，针对之前注浆的漏水情况我们已建档追踪，下周阴雨天我会提前敲门检查。系统显示账户有2450元出账，还要劳驾您顺手结清，谢谢配合。";
 
+        // 微信高保真：动态客情备注数据源
+        let personNotes = [
+            {
+                id: 'note-1',
+                tag: '客情脾气',
+                date: '26-03-30',
+                content: '对保洁细节要求极高；平时习惯周末早上打网球。如果是催缴物业费，请绝对避开周末上午。'
+            },
+            {
+                id: 'note-2',
+                tag: '档案背景',
+                date: '26-03-28',
+                content: '王老师退休前是中学物理老师，讲究逻辑，对工程（漏水）维保质量很敏感，不喜欢推诿辞令。'
+            }
+        ];
+
+        // 动态关联资产物理数据源
+        let wangAssets = [
+            { id: 'asset-1', type: '房产', community: '青山项目', desc: '3栋 102', detail: '128㎡ · 自住', current: true },
+            { id: 'asset-2', type: '房产', community: '青山项目', desc: '5栋 405', detail: '89㎡ · 出租', current: false }
+        ];
+
+        // 封闭式资产编号枚举
+        const closedAssetOptions = {
+            '房产': [
+                { desc: '1栋 203', detail: '90㎡ · 空置' },
+                { desc: '2栋 501', detail: '142㎡ · 自住' },
+                { desc: '3栋 1204', detail: '115㎡ · 空置' }
+            ],
+            '车位': [
+                { desc: '地下负一层 B-092', detail: '标准型 · 完好' },
+                { desc: '地下负二层 B-154', detail: '微型 · 完好' },
+                { desc: '地面车位 A-011', detail: '带充电桩 · 完好' }
+            ],
+            '储物间': [
+                { desc: '地下储藏室 C-102', detail: '5.2㎡ · 完好' },
+                { desc: '地下储藏室 C-105', detail: '8.5㎡ · 完好' },
+                { desc: '一楼便民储物柜 A-02', detail: '3.0㎡ · 完好' }
+            ]
+        };
+
+        let selectedAssetType = '房产'; // 默认值
+        let assetIdToUnbind = null; // 临时存储准备解绑的资产ID
+
+        // ======= 模块 1：AI 助手面板 =======
         let typeTimeout, isTyping = false;
 
         function openAiAssistant() {
-            aiBackdrop.classList.remove('hidden');
-            aiSheet.classList.remove('hidden');
-            setTimeout(() => {
-                aiBackdrop.classList.remove('opacity-0');
-                aiSheet.classList.remove('translate-y-full');
-            }, 10);
+            if (aiBackdrop && aiSheet) {
+                aiBackdrop.classList.remove('hidden');
+                aiSheet.classList.remove('hidden');
+                setTimeout(() => {
+                    aiBackdrop.classList.remove('opacity-0');
+                    aiSheet.classList.remove('translate-y-full');
+                }, 10);
+            }
 
             typeWriterText.innerHTML = '';
             cursor.style.display = 'inline-block';
             fillBtn.classList.remove('opacity-100', 'translate-y-0');
             fillBtn.classList.add('opacity-0', 'translate-y-2');
             fillBtn.disabled = true;
-            aiStatus.innerHTML = `<i data-lucide="loader-2" class="w-3.5 h-3.5 animate-spin"></i> 分析单聊情境中...`;
-            lucide.createIcons();
+            aiStatus.innerHTML = `<i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i> 处理中...`;
+            aiStatus.className = "text-[14px] text-brand font-bold flex items-center gap-1";
+            safeInitIcons();
 
             setTimeout(() => {
-                aiStatus.innerHTML = `<i data-lucide="sparkles" class="w-3.5 h-3.5 text-brand pointer-events-none"></i> <span class="pointer-events-none">话术已生成</span>`;
-                lucide.createIcons();
+                aiStatus.innerHTML = `<i data-lucide="check-circle-2" class="w-4 h-4"></i> 生成完毕`;
+                aiStatus.className = "text-[14px] text-emerald-600 font-extrabold flex items-center gap-1";
+                safeInitIcons();
                 startTypewriter(draftMessage);
             }, 800);
         }
 
         function closeAiAssistant() {
-            aiBackdrop.classList.add('opacity-0');
-            aiSheet.classList.add('translate-y-full');
             clearTimeout(typeTimeout);
             isTyping = false;
-            setTimeout(() => { aiBackdrop.classList.add('hidden'); aiSheet.classList.add('hidden'); }, 300);
+            if (aiBackdrop && aiSheet) {
+                aiBackdrop.classList.add('opacity-0');
+                aiSheet.classList.add('translate-y-full');
+                setTimeout(() => { 
+                    aiBackdrop.classList.add('hidden'); 
+                    aiSheet.classList.add('hidden'); 
+                }, 300);
+            }
         }
 
         function startTypewriter(text) {
@@ -829,46 +854,48 @@
 
         function fillInput() {
             closeAiAssistant();
-            mockInput.innerHTML = `<span class="text-slate-800">${draftMessage}</span>`;
+            mockInput.innerHTML = `<span class="text-slate-900 font-medium">${draftMessage}</span>`;
             extraIcons.classList.add('hidden');
             sendBtn.classList.remove('hidden');
         }
 
-        // ======= 模块 2：工作台(Workbench) =======
+        // ======= 模块 2：全息工作台 (三大轴心) =======
         const workbenchBackdrop = document.getElementById('workbench-backdrop');
         const workbenchSheet = document.getElementById('workbench-sheet');
-        const statusSheet = document.getElementById('status-sheet');
-        const memberModal = document.getElementById('member-modal');
-        const memberList = document.getElementById('member-list');
-        const assetMapSheet = document.getElementById('asset-map-sheet');
-        const bindPropertyModal = document.getElementById('bind-property-modal');
-
-        let activeScenario = 'old'; 
-        let currentTab = 'person'; 
+        let currentTab = 'events';
 
         function openWorkbench() {
-            workbenchBackdrop.classList.remove('hidden');
-            workbenchSheet.classList.remove('hidden');
-            setTimeout(() => {
-                workbenchBackdrop.classList.remove('opacity-0');
-                workbenchSheet.classList.remove('translate-y-full');
-                renderMemberList('自住');
-                activeScenario === 'new' ? showWorkbenchEmptyState() : showWorkbenchFullState();
-            }, 10);
+            if (workbenchBackdrop && workbenchSheet) {
+                workbenchBackdrop.classList.remove('hidden');
+                workbenchSheet.classList.remove('hidden');
+                setTimeout(() => {
+                    workbenchBackdrop.classList.remove('opacity-0');
+                    workbenchSheet.classList.remove('translate-y-full');
+                    renderMemberList('自住');
+                    renderPersonNotes(); // 动态载入备注档案数据
+                    renderPropertiesList(); // 动态载入关联资产大盘
+                    switchTab(currentTab);
+                }, 10);
+            }
         }
 
         function closeWorkbench() {
-            workbenchBackdrop.classList.add('opacity-0');
-            workbenchSheet.classList.add('translate-y-full');
-            closeStatusSheet();
-            closeMemberModal();
-            closeAssetMap();
-            closeNoteModal();
-            closeBill();
-            setTimeout(() => { workbenchBackdrop.classList.add('hidden'); workbenchSheet.classList.add('hidden'); }, 300);
+            if (workbenchBackdrop && workbenchSheet) {
+                workbenchBackdrop.classList.add('opacity-0');
+                workbenchSheet.classList.add('translate-y-full');
+                closeStatusSheet();
+                closeNoteModal();
+                closeBill();
+                closeTodoModal();
+                closeAddAssetModal();
+                closeUnbindConfirmModal(); // 同步关闭解绑二次确认
+                setTimeout(() => { 
+                    workbenchBackdrop.classList.add('hidden'); 
+                    workbenchSheet.classList.add('hidden'); 
+                }, 300);
+            }
         }
 
-        // --- 极简分段 Tabs 切换 ---
         function switchTab(tab) {
             currentTab = tab;
             const btnPerson = document.getElementById('tab-person');
@@ -879,231 +906,711 @@
             const contentEvents = document.getElementById('content-events');
             const luiBtnText = document.getElementById('lui-button-text');
 
-            // 🚀 核心改动 1：只要切换 Tab，自动执行收回跨项目资产关联及房屋状态极速切换
-            closeAssetMap();
-            closeStatusSheet(); // 完美修复房屋状态未自动收回的死角
+            // 彻底防止 `ReferenceError: closeStatusSheet is not defined`
+            closeStatusSheet(); 
             closeBill();
 
-            // 基础样式
-            const inactiveClass = "flex-1 py-2 text-center text-[13px] font-bold rounded-lg transition-all text-slate-600 hover:text-slate-800 flex justify-center items-center gap-1.5 relative";
-            const activeClassPerson = "flex-1 py-2 text-center text-[13px] font-bold rounded-lg transition-all bg-white text-indigo-700 shadow-sm flex justify-center items-center gap-1.5 relative border border-black/[0.04]";
-            const activeClassProperty = "flex-1 py-2 text-center text-[13px] font-bold rounded-lg transition-all bg-white text-emerald-700 shadow-sm flex justify-center items-center gap-1.5 relative border border-black/[0.04]";
-            const activeClassEvents = "flex-1 py-2 text-center text-[13px] font-bold rounded-lg transition-all bg-white text-rose-700 shadow-sm flex justify-center items-center gap-1.5 relative border border-black/[0.04]";
+            const inactiveClass = "flex-1 py-2.5 text-[15px] font-bold rounded-lg transition-all text-slate-500 hover:text-slate-900";
+            const activeClass = "flex-1 py-2.5 text-[15px] font-extrabold rounded-lg transition-all bg-white shadow-sm border border-slate-100";
 
-            [btnPerson, btnProperty, btnEvents].forEach(btn => btn.className = inactiveClass);
-            [contentPerson, contentProperty, contentEvents].forEach(c => c.classList.add('hidden'));
+            if (btnPerson && btnProperty && btnEvents) {
+                btnPerson.className = inactiveClass;
+                btnProperty.className = inactiveClass;
+                btnEvents.className = inactiveClass;
+            }
+            if (contentPerson && contentProperty && contentEvents) {
+                [contentPerson, contentProperty, contentEvents].forEach(c => c.classList.add('hidden'));
+            }
 
             if (tab === 'person') {
-                btnPerson.className = activeClassPerson;
-                contentPerson.classList.remove('hidden');
-                if(luiBtnText) luiBtnText.innerText = "按住 语音登记人情特征";
+                if (btnPerson) btnPerson.className = activeClass + " text-indigo-700";
+                if (contentPerson) contentPerson.classList.remove('hidden');
+                if (luiBtnText) luiBtnText.innerText = "按住 录入客情";
             } else if (tab === 'property') {
-                btnProperty.className = activeClassProperty;
-                contentProperty.classList.remove('hidden');
-                if(luiBtnText) luiBtnText.innerText = "按住 记录工程档案";
+                if (btnProperty) btnProperty.className = activeClass + " text-emerald-700";
+                if (contentProperty) contentProperty.classList.remove('hidden');
+                if (luiBtnText) luiBtnText.innerText = "按住 记录隐患";
             } else if (tab === 'events') {
-                btnEvents.className = activeClassEvents;
-                contentEvents.classList.remove('hidden');
-                if(luiBtnText) luiBtnText.innerText = "按住 语音催办工单";
+                if (btnEvents) {
+                    btnEvents.className = activeClass + " text-rose-700 relative";
+                    btnEvents.innerHTML = '业务跟进 <span class="absolute top-2 right-4 w-2 h-2 bg-rose-500 rounded-full"></span>';
+                }
+                if (contentEvents) contentEvents.classList.remove('hidden');
+                if (luiBtnText) luiBtnText.innerText = "按住 生成待办";
             }
         }
 
-        function showWorkbenchEmptyState() {
-            document.getElementById('tab-person').parentElement.style.display = 'none'; // 隐藏整个tab条
-            document.getElementById('content-person').classList.add('hidden');
-            document.getElementById('content-property').classList.add('hidden');
-            document.getElementById('content-events').classList.add('hidden');
-            document.getElementById('workbench-empty-view').classList.remove('hidden');
-            document.getElementById('workbench-empty-view').style.display = 'flex';
+        // --- 房产列表折叠与动态渲染 ---
+        function togglePropertiesList() {
+            const container = document.getElementById('properties-list-container');
+            const chevron = document.getElementById('properties-chevron');
+            if (container) {
+                if (container.classList.contains('hidden')) {
+                    container.classList.remove('hidden');
+                    if (chevron) chevron.style.transform = 'rotate(180deg)';
+                } else {
+                    container.classList.add('hidden');
+                    if (chevron) chevron.style.transform = 'rotate(0deg)';
+                }
+            }
         }
 
-        function showWorkbenchFullState() {
-            document.getElementById('tab-person').parentElement.style.display = 'flex';
-            document.getElementById('workbench-empty-view').classList.add('hidden');
-            document.getElementById('workbench-empty-view').style.display = 'none';
-            switchTab(currentTab);
+        function renderPropertiesList() {
+            const container = document.getElementById('properties-list-container');
+            const summaryText = document.getElementById('assets-summary-text');
+            if (!container) return;
+
+            // 刷新卡片头部的统计文本
+            const firstAsset = wangAssets[0] ? wangAssets[0].desc : '无房产';
+            if (summaryText) {
+                summaryText.innerText = `${firstAsset} 等${wangAssets.length}项`;
+            }
+
+            // 刷新内部可展收列表
+            let html = '';
+            wangAssets.forEach(asset => {
+                const isCurrent = asset.current;
+                const cardBg = isCurrent ? 'bg-slate-50 border-slate-300' : 'bg-white border-slate-200 hover:bg-slate-50';
+                const tagBg = asset.type === '房产' ? 'bg-indigo-50 text-indigo-700 border-indigo-100' : (asset.type === '车位' ? 'bg-emerald-50 text-emerald-700 border-emerald-100' : 'bg-amber-50 text-amber-700 border-amber-100');
+                
+                html += `
+                    <div class="flex justify-between items-center p-3.5 rounded-xl border cursor-pointer active:scale-[0.98] transition-all shadow-sm ${cardBg}" onclick="switchActiveAsset('${asset.id}')">
+                        <div class="flex flex-col gap-1">
+                            <span class="text-[15px] font-extrabold text-slate-800 flex items-center gap-2">
+                                ${asset.community} - ${asset.desc}
+                                ${isCurrent ? '<span class="text-[10px] text-brand bg-blue-100 px-1.5 py-0.5 rounded border border-blue-200">当前展示</span>' : ''}
+                            </span>
+                            <span class="text-[13px] text-slate-500 font-bold flex items-center gap-2">
+                                <span class="px-1.5 py-0.5 rounded text-[10px] border ${tagBg}">${asset.type}</span>
+                                ${asset.detail}
+                            </span>
+                        </div>
+                        <span class="text-[14px] text-slate-400 font-mono font-extrabold flex items-center gap-1 hover:text-rose-500" onclick="event.stopPropagation(); deleteAsset('${asset.id}')">
+                            [解绑]
+                        </span>
+                    </div>
+                `;
+            });
+
+            container.innerHTML = html;
         }
 
-        // --- 记备注 (Note Modal) ---
+        function switchActiveAsset(assetId) {
+            wangAssets.forEach(asset => {
+                asset.current = (asset.id === assetId);
+            });
+            const activeAsset = wangAssets.find(a => a.id === assetId);
+            if(activeAsset) {
+                // 大盘同步切换王老师对应房间的工单信息
+                const detailsTitle = document.getElementById('property-details-title');
+                if (detailsTitle) {
+                    detailsTitle.innerText = `${activeAsset.desc.replace(' ', '-')}`;
+                }
+                showCustomToast(`✓ 切换服务视角：已定位到 ${activeAsset.desc}`);
+            }
+            renderPropertiesList();
+        }
+
+        // 物理销档关联资产（改为解绑二次确认流程）
+        function deleteAsset(assetId) {
+            const target = wangAssets.find(a => a.id === assetId);
+            if (target) {
+                if (target.current) {
+                    showCustomToast("⚠ 当前展示房产无法解除关联，请先切换。");
+                    return;
+                }
+                
+                // 暂存待解绑ID，并打开高保真微信风格确认弹窗
+                assetIdToUnbind = assetId;
+                const modal = document.getElementById('unbind-confirm-modal');
+                const descSpan = document.getElementById('unbind-target-name');
+                const confirmBtn = document.getElementById('confirm-unbind-btn');
+                
+                if (modal && descSpan && confirmBtn) {
+                    descSpan.innerText = `${target.community} - ${target.desc}`;
+                    
+                    // 动态绑定确认按钮事件
+                    confirmBtn.onclick = function() {
+                        executeUnbind();
+                    };
+                    
+                    modal.classList.remove('opacity-0', 'pointer-events-none', 'scale-95');
+                    modal.classList.add('opacity-100', 'pointer-events-auto', 'scale-100');
+                }
+            }
+        }
+
+        function triggerUnbind(assetName, cardId) {
+            const modal = document.getElementById('unbind-confirm-modal');
+            const descSpan = document.getElementById('unbind-target-name');
+            const confirmBtn = document.getElementById('confirm-unbind-btn');
+            if (!modal || !descSpan || !confirmBtn) return;
+
+            descSpan.innerText = assetName;
+            confirmBtn.onclick = function() {
+                const card = document.getElementById(cardId);
+                if (card) card.remove();
+                closeUnbindConfirmModal();
+                showCustomToast("✓ 资产关联关系已成功解绑");
+            };
+
+            modal.classList.remove('opacity-0', 'pointer-events-none', 'scale-95');
+            modal.classList.add('opacity-100', 'pointer-events-auto', 'scale-100');
+        }
+
+        // 关闭解绑二次确认弹窗
+        function closeUnbindConfirmModal() {
+            const modal = document.getElementById('unbind-confirm-modal');
+            if (modal) {
+                modal.classList.remove('opacity-100', 'pointer-events-auto', 'scale-100');
+                modal.classList.add('opacity-0', 'pointer-events-none', 'scale-95');
+            }
+            assetIdToUnbind = null;
+        }
+
+        // 确认真正执行解绑数据剔除
+        function executeUnbind() {
+            if (assetIdToUnbind) {
+                wangAssets = wangAssets.filter(a => a.id !== assetIdToUnbind);
+                renderPropertiesList();
+                showCustomToast("✓ 资产关联关系已成功解绑");
+            }
+            closeUnbindConfirmModal();
+        }
+
+        // ======= 关联新资产 =======
+        const addAssetModal = document.getElementById('add-asset-modal');
+
+        function openAddAssetModal(e) {
+            if(e) e.stopPropagation(); // 阻止折叠展开冒泡！
+
+            // 1. 初始化弹窗表单状态
+            selectAssetType('房产');
+            const commSelect = document.getElementById('asset-community-select');
+            if (commSelect) commSelect.value = '青山项目';
+            
+            // 2. 动效展开弹窗
+            if (addAssetModal) {
+                addAssetModal.classList.remove('opacity-0', 'pointer-events-none', 'scale-95');
+                addAssetModal.classList.add('opacity-100', 'pointer-events-auto', 'scale-100');
+            }
+        }
+
+        function closeAddAssetModal() {
+            if (addAssetModal) {
+                addAssetModal.classList.remove('opacity-100', 'pointer-events-auto', 'scale-100');
+                addAssetModal.classList.add('opacity-0', 'pointer-events-none', 'scale-95');
+            }
+        }
+
+        // 切换房产/车位/储物间
+        function selectAssetType(type) {
+            selectedAssetType = type;
+            
+            const btnHouse = document.getElementById('btn-asset-type-house');
+            const btnParking = document.getElementById('btn-asset-type-parking');
+            const btnStorage = document.getElementById('btn-asset-type-storage');
+            
+            const inactiveStyle = "flex-1 py-2 text-[14px] font-bold rounded-lg transition-all text-slate-500 hover:text-slate-900";
+            const activeStyle = "flex-1 py-2 text-[14px] font-extrabold rounded-lg transition-all bg-white text-brand shadow-sm border border-slate-200/50";
+            
+            if (btnHouse && btnParking && btnStorage) {
+                [btnHouse, btnParking, btnStorage].forEach(b => b.className = inactiveStyle);
+                if (type === '房产') btnHouse.className = activeStyle;
+                else if (type === '车位') btnParking.className = activeStyle;
+                else if (type === '储物间') btnStorage.className = activeStyle;
+            }
+
+            // 动态渲染下方的封闭编号下拉菜单项目
+            const idSelect = document.getElementById('asset-id-select');
+            if (idSelect) {
+                let selectHtml = '';
+                closedAssetOptions[type].forEach(item => {
+                    selectHtml += `<option value="${item.desc}|${item.detail}">${item.desc} (${item.detail.split(' · ')[0]})</option>`;
+                });
+                idSelect.innerHTML = selectHtml;
+            }
+        }
+
+        // 点击设置关联，触发数据双端流动
+        function saveAssociatedAsset() {
+            const communitySelect = document.getElementById('asset-community-select');
+            const idSelect = document.getElementById('asset-id-select');
+            if (!communitySelect || !idSelect) return;
+
+            const community = communitySelect.value;
+            const idSelectVal = idSelect.value;
+            const [desc, detail] = idSelectVal.split('|');
+
+            // 查重：不可关联已绑定的资产编号
+            const isExist = wangAssets.some(a => a.community === community && a.desc === desc);
+            if (isExist) {
+                showCustomToast(`⚠ 提示：该资产已在当前关联名录中`);
+                closeAddAssetModal();
+                return;
+            }
+
+            // 新增一条沙盒资产关系
+            const newAsset = {
+                id: 'asset-' + Date.now(),
+                type: selectedAssetType,
+                community: community,
+                desc: desc,
+                detail: detail,
+                current: false
+            };
+
+            wangAssets.push(newAsset);
+            
+            // 原位自动重绘列表并收缩弹窗
+            renderPropertiesList();
+            closeAddAssetModal();
+            showCustomToast(`✓ 成功新增关联资产：${desc}`);
+        }
+
+        // --- 铅笔按钮行为分流判断 ---
+        function handlePencilClick() {
+            if (currentTab === 'events') {
+                openTodoModal();
+            } else {
+                openNoteModal(currentTab);
+            }
+        }
+
+        function showCustomToast(message) {
+            const toast = document.getElementById('toast-owner') || document.getElementById('toast-ai');
+            const msgNode = document.getElementById('toast-owner-msg');
+            if (!toast) return;
+
+            if (msgNode) msgNode.innerText = message;
+            toast.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-4');
+            toast.classList.add('opacity-100', 'translate-y-0');
+
+            clearTimeout(window.customToastTimer);
+            window.customToastTimer = setTimeout(() => {
+                toast.classList.remove('opacity-100', 'translate-y-0');
+                toast.classList.add('opacity-0', 'pointer-events-none', 'translate-y-4');
+            }, 2200);
+        }
+
+        function undoActionOwner() {
+            showCustomToast("已撤销上一步操作");
+        }
+
+        function undoActionAi() {
+            const toast = document.getElementById('toast-ai');
+            if (!toast) return;
+            toast.classList.remove('opacity-100', 'translate-y-0');
+            toast.classList.add('opacity-0', 'pointer-events-none', 'translate-y-4');
+        }
+
+        function openMemberModal(mode, name = '', role = '', phone = '', wechat = '', remark = '') {
+            const modal = document.getElementById('member-modal');
+            if (!modal) return;
+
+            document.getElementById('member-modal-title').innerText = `${mode || '编辑'}成员档案`;
+            document.getElementById('member-name').value = name;
+            document.getElementById('member-role').value = role || '家属/同住人';
+            document.getElementById('member-phone').value = phone;
+            document.getElementById('member-wechat').value = wechat;
+            document.getElementById('member-remark').value = remark;
+
+            modal.classList.remove('opacity-0', 'pointer-events-none', 'scale-95');
+            modal.classList.add('opacity-100', 'pointer-events-auto', 'scale-100');
+        }
+
+        function closeMemberModal() {
+            const modal = document.getElementById('member-modal');
+            if (!modal) return;
+            modal.classList.remove('opacity-100', 'pointer-events-auto', 'scale-100');
+            modal.classList.add('opacity-0', 'pointer-events-none', 'scale-95');
+        }
+
+        function saveMemberModal() {
+            closeMemberModal();
+            showCustomToast("✓ 成员档案已保存");
+        }
+
+        function startWeComChat(name) {
+            closeWorkbench();
+            setTimeout(() => {
+                mockInput.innerHTML = `<span class="text-slate-900 font-medium">@${name} 您好，我是嘉信物业管家，想和您确认一下当前事项。</span>`;
+                extraIcons.classList.add('hidden');
+                sendBtn.classList.remove('hidden');
+                showCustomToast(`已打开与 ${name} 的企微单聊草稿`);
+            }, 300);
+        }
+
+        function closeAssetMap() {
+            const sheet = document.getElementById('asset-map-sheet');
+            if (!sheet) return;
+            sheet.classList.add('translate-y-full');
+        }
+
+        function openBindModal() {
+            closeAssetMap();
+            openAddAssetModal();
+        }
+
+        // --- 房屋状态切换 ---
+        function openStatusSheet() {
+            const sheet = document.getElementById('status-sheet');
+            if (sheet) sheet.classList.remove('translate-y-full'); 
+        }
+        function closeStatusSheet() { 
+            const sheet = document.getElementById('status-sheet');
+            if (sheet) sheet.classList.add('translate-y-full'); 
+        }
+        
+        function changeHousingStatus(status, styleClasses) {
+            const btn = document.getElementById('status-btn');
+            const displaySpan = document.getElementById('current-housing-status');
+            if (btn && displaySpan) {
+                btn.className = `min-h-[40px] px-4 rounded-xl text-[15px] font-extrabold active:scale-95 transition-all border flex items-center gap-1.5 ${styleClasses}`;
+                displaySpan.innerText = `当前状态：${status}`;
+            }
+            
+            closeStatusSheet(); 
+            showCustomToast(`已更新资产状态为：${status}`);
+            renderMemberList(status);
+        }
+
+        // --- 记备注 Modal ---
         const noteModal = document.getElementById('note-modal');
-        let currentNoteType = 'person'; 
+        let currentNoteType = 'property'; 
+        let editingNoteId = null; // 当前正在被编辑的备注卡片 ID
 
-        function openNoteModal(type) {
+        function openNoteModal(type, noteId = null) {
             currentNoteType = type;
+            editingNoteId = noteId;
             const title = document.getElementById('note-modal-title');
-            const icon = document.getElementById('note-modal-icon');
             const subtitle = document.getElementById('note-modal-subtitle');
             const toggles = document.getElementById('note-type-toggles');
             const textarea = document.getElementById('note-textarea');
+            if (!title || !subtitle || !toggles || !textarea) return;
+
             textarea.value = '';
 
             if (type === 'person') {
-                title.innerText = "添加客情备注 (随人迁移)";
-                subtitle.innerText = "记录客户的偏好与性格...";
-                toggles.innerHTML = `<span class="bg-indigo-600 text-white text-[12px] font-bold px-3 py-1.5 rounded-lg shadow-sm">客情脾气</span><span class="bg-white border border-slate-200 text-slate-500 text-[12px] px-3 py-1.5 rounded-lg">喜好习惯</span>`;
+                title.innerText = noteId ? "编辑备注档案" : "添加备注档案";
+                subtitle.innerText = "记录客户偏好与性格 (随人迁移)";
+                toggles.innerHTML = `<span class="bg-indigo-600 text-white text-[13px] font-bold px-3 py-1.5 rounded-lg shadow-sm">客情脾气</span><span class="bg-slate-100 text-slate-600 text-[13px] px-3 py-1.5 rounded-lg font-bold">日常喜好</span>`;
+                
+                // 如果是编辑模式，预填原卡片文字
+                if (noteId) {
+                    const matched = personNotes.find(n => n.id === noteId);
+                    if (matched) {
+                        textarea.value = matched.content;
+                    }
+                }
             } else {
-                title.innerText = "登记工程档案 (随房不销档)";
-                subtitle.innerText = "记录物理属性缺陷与维护历史...";
-                toggles.innerHTML = `<span class="bg-emerald-600 text-white text-[12px] font-bold px-3 py-1.5 rounded-lg shadow-sm">工程缺陷</span><span class="bg-white border border-slate-200 text-slate-500 text-[12px] px-3 py-1.5 rounded-lg">隐蔽工程</span>`;
+                title.innerText = "登记工程档案";
+                subtitle.innerText = "记录物理隐患与维护历史 (随房固化)";
+                toggles.innerHTML = `<span class="bg-emerald-600 text-white text-[13px] font-bold px-3 py-1.5 rounded-lg shadow-sm">工程缺陷</span><span class="bg-[#F2F2F7] text-slate-600 text-[13px] px-3 py-1.5 rounded-lg font-bold">日常维保</span>`;
             }
-            noteModal.classList.remove('opacity-0', 'pointer-events-none', 'scale-95');
+            if (noteModal) {
+                noteModal.classList.remove('opacity-0', 'pointer-events-none', 'scale-95');
+                noteModal.classList.add('opacity-100', 'pointer-events-auto', 'scale-100');
+            }
         }
 
-        function closeNoteModal() { noteModal.classList.add('opacity-0', 'pointer-events-none', 'scale-95'); }
+        function closeNoteModal() { 
+            if (noteModal) {
+                noteModal.classList.remove('opacity-100', 'pointer-events-auto', 'scale-100');
+                noteModal.classList.add('opacity-0', 'pointer-events-none', 'scale-95'); 
+            }
+            editingNoteId = null;
+        }
 
         function saveNoteModal() {
-            const val = document.getElementById('note-textarea').value;
-            if(!val.trim()) { closeNoteModal(); return; }
+            const textarea = document.getElementById('note-textarea');
+            if (!textarea) return;
+            const val = textarea.value.trim();
+            if(!val) { closeNoteModal(); return; }
 
-            const timeStr = "刚刚";
             if (currentNoteType === 'person') {
-                document.getElementById('person-notes-list').insertAdjacentHTML('afterbegin', `
-                    <div class="bg-white border-l-4 border-l-indigo-400 border border-slate-200 rounded-xl p-3.5 shadow-sm animate-fade-in">
-                        <div class="flex justify-between items-center mb-1.5">
-                            <span class="text-[11px] bg-slate-50 text-slate-500 font-bold px-1.5 py-0.5 rounded border border-slate-100">客情记录</span>
-                            <span class="text-[11px] text-slate-400 font-mono">${timeStr}</span>
-                        </div><p class="text-[13px] text-slate-600 leading-relaxed font-medium">${val}</p></div>
-                `);
-                showCustomToast("已登记客情记录");
+                if (editingNoteId) {
+                    // 1. 微信原位编辑：修改数据状态
+                    const matched = personNotes.find(n => n.id === editingNoteId);
+                    if (matched) {
+                        matched.content = val;
+                        showCustomToast("✓ 备注卡片更新成功");
+                    }
+                } else {
+                    // 2. 微信原位新建：新增数据状态
+                    const newId = 'note-' + Date.now();
+                    const now = new Date();
+                    const dateFormatted = `${String(now.getFullYear()).slice(-2)}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+                    personNotes.unshift({
+                        id: newId,
+                        tag: '新增备注',
+                        date: dateFormatted,
+                        content: val
+                    });
+                    showCustomToast("✓ 备注新建成功");
+                }
+                renderPersonNotes(); // 异步自适应渲染刷新
             } else {
-                document.getElementById('property-notes-list').insertAdjacentHTML('afterbegin', `
-                    <div class="bg-white border-l-4 border-l-emerald-400 border border-slate-200 rounded-xl p-3.5 shadow-sm animate-fade-in">
-                        <div class="flex justify-between items-center mb-1.5">
-                            <span class="text-[11px] bg-slate-50 text-slate-500 font-bold px-1.5 py-0.5 rounded border border-slate-100">缺陷追踪</span>
-                            <span class="text-[11px] text-slate-400 font-mono">${timeStr}</span>
-                        </div><p class="text-[13px] text-slate-600 leading-relaxed font-medium">${val}</p></div>
-                `);
-                showCustomToast("已登记资产档案");
+                const propertyList = document.getElementById('property-notes-list');
+                if (propertyList) {
+                    propertyList.insertAdjacentHTML('afterbegin', `
+                        <div class="bg-white border-l-[4px] border-l-emerald-500 border border-slate-200 rounded-2xl p-4 shadow-sm animate-fade-in flex flex-col relative">
+                            <div class="flex justify-between items-center mb-3">
+                                <span class="text-[12px] bg-emerald-50 text-emerald-700 font-bold px-2 py-0.5 rounded border border-emerald-100">新增隐患</span>
+                                <span class="text-[12px] text-slate-400 font-mono font-bold">刚刚</span>
+                            </div>
+                            <p class="text-[15px] text-slate-800 leading-[1.6] font-medium">${val}</p>
+                        </div>
+                    `);
+                }
+                showCustomToast("已登记隐患");
             }
             closeNoteModal();
         }
 
-        // --- 资产版图 (Asset Map) ---
-        function openAssetMap() { assetMapSheet.classList.remove('translate-y-full'); }
-        function closeAssetMap() { assetMapSheet.classList.add('translate-y-full'); closeBindModal(); }
-
-        // --- 绑定新资产逻辑 (纯下拉选择) ---
-        function openBindModal() { bindPropertyModal.classList.remove('opacity-0', 'pointer-events-none', 'scale-95'); }
-        function closeBindModal() { bindPropertyModal.classList.add('opacity-0', 'pointer-events-none', 'scale-95'); }
-        function savePropertyBind() {
-            const selectEl = document.getElementById('bind-room-number');
-            const roomNum = selectEl.value || "新资产"; 
-            closeBindModal();
-            closeAssetMap();
-            showCustomToast(`挂载成功：已关联 [${roomNum}]`);
-            if (activeScenario === 'new') setTimeout(() => { switchScenario('old'); }, 800);
-        }
-
-        // --- 解绑逻辑 ---
-        const unbindModal = document.getElementById('unbind-confirm-modal');
-        let currentUnbindTarget = '', currentUnbindCardId = '';
-
-        function triggerUnbind(roomName, cardId) {
-            currentUnbindTarget = roomName; currentUnbindCardId = cardId;
-            document.getElementById('unbind-target-name').innerText = roomName;
-            unbindModal.classList.remove('opacity-0', 'pointer-events-none', 'scale-95');
-        }
-        function closeUnbindModal() { unbindModal.classList.add('opacity-0', 'pointer-events-none', 'scale-95'); }
-        function executeUnbind() {
-            closeUnbindModal(); closeAssetMap();
-            const card = document.getElementById(currentUnbindCardId);
-            if (card) card.style.display = 'none';
-            showCustomToast(`已解绑 [${currentUnbindTarget}]`);
-        }
-
-        // --- 场景模拟器 ---
-        function switchScenario(type) {
-            activeScenario = type;
-            const btnOld = document.getElementById('sim-btn-old');
-            const btnNew = document.getElementById('sim-btn-new');
-            const chatHeader = document.getElementById('chat-header-title');
-            const chatOldMsg = document.getElementById('chat-msg-old');
-            const chatNewMsg = document.getElementById('chat-msg-new');
-            const aiContextTitle = document.getElementById('ai-context-title');
-            const aiWidgets = document.getElementById('ai-widgets-box');
-
-            if (type === 'new') {
-                btnNew.className = 'px-4 py-2 text-[13px] font-bold rounded-lg bg-white shadow-sm text-slate-800 transition-all';
-                btnOld.className = 'px-4 py-2 text-[13px] font-bold rounded-lg text-slate-600 hover:text-slate-800 transition-all';
-                chatHeader.innerText = "新微友 (未绑房)";
-                chatOldMsg.classList.add('hidden'); chatNewMsg.classList.remove('hidden');
-                aiContextTitle.innerText = "上下文：游离访客";
-                aiWidgets.style.opacity = '0.3'; aiWidgets.style.pointerEvents = 'none';
-                if (!workbenchSheet.classList.contains('translate-y-full')) showWorkbenchEmptyState();
-            } else {
-                btnOld.className = 'px-4 py-2 text-[13px] font-bold rounded-lg bg-white shadow-sm text-slate-800 transition-all';
-                btnNew.className = 'px-4 py-2 text-[13px] font-bold rounded-lg text-slate-600 hover:text-slate-800 transition-all';
-                chatHeader.innerText = "王老师 (3栋102)";
-                chatOldMsg.classList.remove('hidden'); chatNewMsg.classList.add('hidden');
-                aiContextTitle.innerText = "上下文：3栋102 - 王老师";
-                aiWidgets.style.opacity = '1'; aiWidgets.style.pointerEvents = 'auto';
-                if (!workbenchSheet.classList.contains('translate-y-full')) showWorkbenchFullState();
+        // 微信高保真：动态渲染左右滑动、可增删改的备注卡片列表
+        function renderPersonNotes() {
+            const listContainer = document.getElementById('person-notes-list');
+            if (!listContainer) return;
+            
+            if (personNotes.length === 0) {
+                listContainer.innerHTML = `
+                    <div class="bg-white border border-dashed border-slate-300 rounded-2xl p-6 text-center text-slate-400 font-bold w-full">
+                        暂无任何备注归档，点击右上角添加
+                    </div>
+                `;
+                return;
             }
-            lucide.createIcons();
+
+            let html = '';
+            personNotes.forEach(note => {
+                html += `
+                    <!-- 横滑专属卡片 (snap-start 维持滑动锚定感) -->
+                    <div id="note-card-${note.id}" class="bg-white border-l-[4px] border-l-indigo-400 border border-slate-200 rounded-2xl p-4 shadow-sm w-[280px] shrink-0 snap-start flex flex-col justify-between h-[154px] animate-fade-in">
+                        <div>
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-[12px] bg-indigo-50 text-indigo-700 font-bold px-2 py-0.5 rounded border border-indigo-100">${note.tag}</span>
+                                <span class="text-[12px] text-slate-400 font-mono font-bold">${note.date}</span>
+                            </div>
+                            <p class="text-[14px] text-slate-700 leading-[1.5] font-medium line-clamp-3">
+                                ${note.content}
+                            </p>
+                        </div>
+                        
+                        <!-- 适老化防漏点选操作触区 -->
+                        <div class="flex justify-end gap-3.5 border-t border-slate-100 pt-2 mt-2 shrink-0">
+                            <button onclick="editNoteCard('${note.id}')" class="text-brand font-bold text-[13px] flex items-center gap-1 active:opacity-50 select-none">
+                                <i data-lucide="edit-2" class="w-3.5 h-3.5"></i> 编辑
+                            </button>
+                            <button onclick="deleteNoteCard('${note.id}')" class="text-rose-600 font-bold text-[13px] flex items-center gap-1 active:opacity-50 select-none">
+                                <i data-lucide="trash-2" class="w-3.5 h-3.5"></i> 删除
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            listContainer.innerHTML = html;
+            safeInitIcons(); // 动态实例化新挂载的图标组件
         }
 
-        // --- 房屋状态选择器 ---
-        function openStatusSheet() { statusSheet.classList.remove('translate-y-full'); }
-        function closeStatusSheet() { statusSheet.classList.add('translate-y-full'); }
-        function changeHousingStatus(status, styleClasses) {
-            const btn = document.getElementById('status-btn');
-            btn.className = `tag-pill ${styleClasses} py-1 text-[12px] active:scale-95 transition-all`;
-            document.getElementById('current-housing-status').innerText = `状态：${status}`;
-            closeStatusSheet(); showCustomToast(`更新状态为：[${status}]`);
-            renderMemberList(status);
+        // 编辑特定备注卡片
+        function editNoteCard(noteId) {
+            openNoteModal('person', noteId);
         }
 
-        // --- 成员编辑 Modal ---
-        function openMemberModal(mode, name='', role='业主本人', phone='', wechat='', remark='') {
-            document.getElementById('member-name').value = name;
-            document.getElementById('member-role').value = role;
-            document.getElementById('member-phone').value = phone;
-            document.getElementById('member-wechat').value = wechat;
-            document.getElementById('member-remark').value = remark;
-            memberModal.classList.remove('opacity-0', 'pointer-events-none', 'scale-95');
+        // 删除特定备注卡片
+        function deleteNoteCard(noteId) {
+            personNotes = personNotes.filter(n => n.id !== noteId);
+            renderPersonNotes();
+            showCustomToast("✓ 备注卡片已成功移除");
         }
-        function closeMemberModal() { memberModal.classList.add('opacity-0', 'pointer-events-none', 'scale-95'); }
-        function saveMemberModal() { closeMemberModal(); showCustomToast(`已保存关系图谱`); }
 
-        // --- 同住人卡片折叠展开 ---
-        function toggleMemberDetail(id) {
-            const detail = document.getElementById(`member-detail-${id}`);
-            const icon = document.getElementById(`member-icon-${id}`);
-            if (detail.classList.contains('hidden')) {
-                detail.classList.remove('hidden'); icon.style.transform = 'rotate(180deg)';
-            } else {
-                detail.classList.add('hidden'); icon.style.transform = 'rotate(0deg)';
+        // ======= 🚀 微信高保真时间提醒选择器 交互逻辑 =======
+        const todoModal = document.getElementById('todo-modal');
+        let selectedDelaySeconds = 5; // 本地选择的提醒延迟状态值
+
+        function openTodoModal() {
+            const textarea = document.getElementById('todo-textarea');
+            if (textarea) textarea.value = '';
+            
+            // 微信高保真：初始定位到“5秒后”按钮上
+            const defaultQuickBtn = document.getElementById('btn-quick-5s');
+            setWeChatQuickTime(5, defaultQuickBtn);
+            
+            if (todoModal) {
+                todoModal.classList.remove('opacity-0', 'pointer-events-none', 'scale-95');
+                todoModal.classList.add('opacity-100', 'pointer-events-auto', 'scale-100');
             }
         }
 
-        function renderMemberList(status) {
-            let html = `
-                <div class="bg-white rounded-2xl border border-slate-200/50 shadow-sm overflow-hidden transition-all border-l-4 border-l-indigo-300">
-                    <div class="flex items-center justify-between p-3.5 cursor-pointer hover:bg-slate-50" onclick="toggleMemberDetail('owner')">
-                        <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 rounded-full bg-slate-100 text-slate-600 flex items-center justify-center font-bold text-[15px] pointer-events-none">王</div>
-                            <div>
-                                <div class="text-[14px] font-bold text-slate-800 flex items-center gap-1.5 pointer-events-none">王老师 <span class="bg-indigo-50 text-indigo-700 px-1.5 py-0.5 rounded text-[10px] font-bold border border-indigo-200">业主本人</span></div>
+        function closeTodoModal() {
+            if (todoModal) {
+                todoModal.classList.remove('opacity-100', 'pointer-events-auto', 'scale-100');
+                todoModal.classList.add('opacity-0', 'pointer-events-none', 'scale-95');
+            }
+            // 关闭时将滚动轮也同步合上，保证下次开启形态完美
+            const picker = document.getElementById('wechat-wheel-picker');
+            if (picker) picker.classList.add('hidden');
+            const chevron = document.getElementById('wechat-picker-chevron');
+            if (chevron) chevron.style.transform = 'rotate(0deg)';
+        }
+
+        // 微信高保真：点击时间卡片，向下收缩滑出滚轮选择盘
+        function toggleWeChatWheelPicker() {
+            const picker = document.getElementById('wechat-wheel-picker');
+            const chevron = document.getElementById('wechat-picker-chevron');
+            if (picker && chevron) {
+                if (picker.classList.contains('hidden')) {
+                    picker.classList.remove('hidden');
+                    chevron.style.transform = 'rotate(180deg)';
+                } else {
+                    picker.classList.add('hidden');
+                    chevron.style.transform = 'rotate(0deg)';
+                }
+            }
+        }
+
+        // 微信高保真：根据给定的秒数，动态计算带中文星期的未来时间字符串并返回
+        function getWeChatTimeStr(seconds) {
+            const days = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'];
+            const targetDate = new Date(Date.now() + seconds * 1000);
+            
+            const today = new Date();
+            const tomorrow = new Date(today); tomorrow.setDate(today.getDate() + 1);
+            const dayAfter = new Date(today); dayAfter.setDate(today.getDate() + 2);
+            
+            let prefix = "";
+            if (targetDate.toDateString() === today.toDateString()) {
+                prefix = "今天";
+            } else if (targetDate.toDateString() === tomorrow.toDateString()) {
+                prefix = "明天";
+            } else if (targetDate.toDateString() === dayAfter.toDateString()) {
+                prefix = "后天";
+            } else {
+                prefix = `${targetDate.getMonth() + 1}月${targetDate.getDate()}日`;
+            }
+            
+            const hours = String(targetDate.getHours()).padStart(2, '0');
+            const minutes = String(targetDate.getMinutes()).padStart(2, '0');
+            return `${prefix} ${days[targetDate.getDay()]} ${hours}:${minutes}`;
+        }
+
+        // 微信高保真：多轮联动，快捷选择按钮高亮及数值更新
+        function setWeChatQuickTime(seconds, btnElement) {
+            selectedDelaySeconds = seconds;
+
+            // 1. 清理所有四个快捷按钮的绿色高亮样式
+            ['btn-quick-5s', 'btn-quick-1h', 'btn-quick-1d', 'btn-quick-1w'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) {
+                    el.className = "py-3 px-4 min-h-[50px] rounded-xl text-[15px] font-extrabold text-slate-800 border-2 border-slate-200 bg-slate-50 active:scale-95 transition-all text-center";
+                }
+            });
+
+            // 2. 赋予当前被点按按钮以微信专属的绿色边框高亮样式
+            if (btnElement) {
+                btnElement.className = "py-3 px-4 min-h-[50px] rounded-xl text-[15px] font-extrabold text-[#07c160] border-2 border-[#07c160] bg-emerald-50 active:scale-95 transition-all text-center shadow-sm";
+            }
+
+            // 3. 毫秒级重算，刷新时间展示框与滚动滚轮状态
+            const mainTimeStr = getWeChatTimeStr(seconds);
+            const timeDisplay = document.getElementById('wechat-time-display');
+            if (timeDisplay) timeDisplay.innerText = mainTimeStr;
+            
+            // 联动重算滚动轮列表的上一个/当前/下一个节点
+            const activeItem = document.getElementById('wheel-item-active');
+            const prevItem = document.getElementById('wheel-item-prev');
+            const nextItem = document.getElementById('wheel-item-next');
+            
+            if (activeItem) activeItem.innerText = mainTimeStr;
+            if (prevItem) prevItem.innerText = getWeChatTimeStr(seconds - 1800); // 半小时前
+            if (nextItem) nextItem.innerText = getWeChatTimeStr(seconds + 1800); // 半小时后
+        }
+
+        function saveTodoModal() {
+            const textarea = document.getElementById('todo-textarea');
+            if (!textarea) return;
+            const content = textarea.value.trim();
+            if(!content) {
+                showCustomToast("⚠ 待办内容不能为空，请重新输入");
+                return;
+            }
+            const delaySeconds = selectedDelaySeconds;
+            
+            closeTodoModal();
+            closeWorkbench(); // 自适应：建立待办后回到微信，准备观察微信提醒的触达
+
+            showCustomToast(`✓ 待办提醒保存成功，将在 ${delaySeconds >= 60 ? Math.round(delaySeconds/60) + '分钟' : delaySeconds + '秒'} 后推送`);
+
+            // 极速演示沙盒：倒计时提醒
+            setTimeout(() => {
+                triggerWeComTodoNotification(content);
+            }, delaySeconds * 1000);
+        }
+
+        // 企微机器人下发提醒消息卡片
+        function triggerWeComTodoNotification(content) {
+            const chatContainer = document.getElementById('chat-container');
+            if (!chatContainer) return;
+            const now = new Date();
+            const timeStr = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+            
+            const cardHtml = `
+                <div class="text-center my-4 animate-fade-in"><span class="text-xs bg-black/[0.06] text-slate-500 px-3 py-1 rounded-md">${timeStr} · 企微管家助手提醒</span></div>
+                <div class="flex gap-3 items-start animate-fade-in">
+                    <div class="w-12 h-12 rounded bg-brand flex items-center justify-center text-white text-xs font-bold shrink-0 shadow-sm leading-tight text-center">企微<br/>助手</div>
+                    <div class="space-y-1">
+                        <div class="bg-white p-4 rounded-xl rounded-tl-none shadow-md border-l-4 border-l-[#07c160] text-slate-800 max-w-[270px] leading-relaxed">
+                            <div class="text-[15px] font-black text-slate-900 mb-1.5 flex items-center gap-1">⏰ 待办提醒</div>
+                            <div class="text-[14px] text-slate-600 mb-2 font-medium">您设定的业务待办事项已到达期提醒时间：</div>
+                            <div class="bg-slate-50 border border-slate-200 p-3 rounded-lg text-[14px] font-bold text-slate-800 mb-2.5 leading-relaxed">
+                                "${content}"
+                            </div>
+                            <div class="text-[12px] text-slate-400 font-bold border-t border-slate-100 pt-2 flex justify-between">
+                                <span>关联客户: 王老师 (3-102)</span>
+                                <span class="text-brand hover:underline cursor-pointer" onclick="openWorkbench()">进入工作台 &rarr;</span>
                             </div>
                         </div>
-                        <div class="flex items-center gap-2">
-                            <button class="text-slate-400 hover:text-slate-600 p-1.5" onclick="event.stopPropagation(); openMemberModal('编辑', '王老师', '业主本人')"><i data-lucide="edit" class="w-4 h-4 pointer-events-none"></i></button>
-                            <i data-lucide="chevron-down" id="member-icon-owner" class="w-4 h-4 text-slate-300 transition-transform duration-300 pointer-events-none"></i>
-                        </div>
                     </div>
-                    <div id="member-detail-owner" class="hidden border-t border-slate-100 bg-slate-50/50 p-3.5">
-                        <div class="text-[13px] text-slate-600 mb-2 leading-relaxed font-medium">偏好：习惯周末打球，勿扰。</div>
-                        <div class="flex justify-end"><button class="bg-white border border-slate-200 text-slate-700 px-3 py-1.5 rounded-lg text-[12px] font-bold shadow-sm">企微单聊</button></div>
-                    </div>
-                </div>`;
-            memberList.innerHTML = html;
-            lucide.createIcons();
+                </div>
+            `;
+            chatContainer.insertAdjacentHTML('beforeend', cardHtml);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+            showCustomToast("🔔 收到一条待办事项提醒消息！");
         }
 
-        // --- 🚀 新增：“AI催费”拟真式流式输出逻辑 =======
-        let billTypeTimeout;
-        let isBillTyping = false;
+        // 模拟发送企微消息
+        function sendMessage() {
+            const chatContainer = document.getElementById('chat-container');
+            if (!chatContainer) return;
+            const inputVal = mockInput.innerText;
+            if (inputVal.trim() === "" || inputVal.startsWith("回车")) return;
 
+            const newMessageHtml = `
+                <div class="flex gap-3 items-start justify-end animate-fade-in">
+                    <div class="space-y-1 text-right">
+                        <div class="bg-brand text-white p-4 rounded-xl rounded-tr-none shadow-sm text-[16px] leading-relaxed max-w-[270px] inline-block text-left font-medium">
+                            ${inputVal}
+                        </div>
+                    </div>
+                    <div class="w-12 h-12 rounded bg-brand flex items-center justify-center text-white font-bold shrink-0 shadow-sm">管</div>
+                </div>
+            `;
+            chatContainer.insertAdjacentHTML('beforeend', newMessageHtml);
+            
+            // 清理输入框
+            mockInput.innerHTML = "回车发送消息...";
+            extraIcons.classList.remove('hidden');
+            sendBtn.classList.add('hidden');
+
+            // 滚动到底部
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+            showCustomToast("✓ 消息已成功发送至企微沙盒");
+        }
+
+        // --- AI催费 Modal ---
+        let billTypeTimeout, isBillTyping = false, btnState = false;
         function generateBill() {
             const billModal = document.getElementById('bill-modal');
             const billStatus = document.getElementById('bill-status');
@@ -1111,37 +1618,35 @@
             const billTypewriterText = document.getElementById('bill-typewriter-text');
             const billCursor = document.getElementById('bill-cursor');
 
-            // 1. 无缝激活顶层大弹窗并触发渐变显示
-            billModal.classList.remove('opacity-0', 'pointer-events-none', 'scale-95');
-            billModal.classList.add('opacity-100', 'pointer-events-auto', 'scale-100');
+            if (billModal) {
+                billModal.classList.remove('opacity-0', 'pointer-events-none', 'scale-95');
+                billModal.classList.add('opacity-100', 'pointer-events-auto', 'scale-100');
+            }
             
-            // 2. 重置打字机内部状态
-            billTypewriterText.innerHTML = '';
+            if (billTypewriterText) billTypewriterText.innerHTML = '';
             if (billCursor) billCursor.style.display = 'inline-block';
             if (billActionBtn) {
+                btnState = false;
                 billActionBtn.disabled = true;
                 billActionBtn.classList.remove('opacity-100', 'translate-y-0');
                 billActionBtn.classList.add('opacity-0', 'translate-y-2');
             }
 
             if (billStatus) {
-                billStatus.innerHTML = `<i data-lucide="loader-2" class="w-4 h-4 animate-spin text-rose-500 pointer-events-none"></i> <span class="pointer-events-none">分析主客观档案中...</span>`;
-                billStatus.className = "text-[11px] text-rose-600 font-bold bg-rose-50 px-2 py-0.5 rounded";
-                lucide.createIcons();
+                billStatus.innerText = "计算语气中...";
+                billStatus.className = "text-[12px] text-rose-700 font-bold bg-rose-50 px-2.5 py-1 rounded-md animate-pulse";
             }
 
             clearTimeout(billTypeTimeout);
             isBillTyping = true;
 
-            // 3. 模拟深度 AI 检索并启动打字机
             setTimeout(() => {
                 if (billStatus) {
-                    billStatus.innerHTML = `<i data-lucide="sparkles" class="w-4 h-4 text-emerald-500 pointer-events-none"></i> <span class="pointer-events-none">语气已智能缓和调优</span>`;
-                    billStatus.className = "text-[11px] text-emerald-700 font-bold bg-emerald-50 px-2 py-0.5 rounded";
-                    lucide.createIcons();
+                    billStatus.innerText = "语气已降温";
+                    billStatus.className = "text-[12px] text-emerald-700 font-bold bg-emerald-50 px-2.5 py-1 rounded-md";
                 }
                 startBillTypewriter(billDraftMessage);
-            }, 1200);
+            }, 1000);
         }
 
         function startBillTypewriter(text) {
@@ -1149,13 +1654,12 @@
             const billCursor = document.getElementById('bill-cursor');
             const billActionBtn = document.getElementById('bill-action-btn');
             
-            isBillTyping = true;
-            let i = 0;
-            billTypewriterText.innerHTML = '';
+            isBillTyping = true; let i = 0;
+            if (billTypewriterText) billTypewriterText.innerHTML = '';
             
             function type() {
                 if (i < text.length && isBillTyping) {
-                    billTypewriterText.innerHTML += text.charAt(i);
+                    if (billTypewriterText) billTypewriterText.innerHTML += text.charAt(i);
                     i++;
                     billTypeTimeout = setTimeout(type, Math.random() * 20 + 10);
                 } else if (isBillTyping) {
@@ -1170,90 +1674,240 @@
             type();
         }
 
+        // 成员面板拨号快捷处理
+        function toggleMemberDetail(id) {
+            const detail = document.getElementById(`member-detail-${id}`);
+            const icon = document.getElementById(`member-icon-${id}`);
+            if (detail && icon) {
+                if (detail.classList.contains('hidden')) {
+                    detail.classList.remove('hidden');
+                    icon.style.transform = 'rotate(180deg)';
+                } else {
+                    detail.classList.add('hidden');
+                    icon.style.transform = 'rotate(0deg)';
+                }
+            }
+        }
+
+        function renderMemberList(status) {
+            const list = document.getElementById('member-list');
+            if (!list) return;
+
+            let html = `
+                <!-- 业主本体 (折叠卡片) -->
+                <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden transition-all">
+                    <!-- 卡片头部 -->
+                    <div class="flex items-center justify-between p-4 cursor-pointer hover:bg-slate-50 active:bg-slate-100" onclick="toggleMemberDetail('owner')">
+                        <div class="flex items-center gap-3.5">
+                            <div class="w-12 h-12 rounded-full bg-indigo-50 text-indigo-600 flex items-center justify-center font-bold text-[16px] pointer-events-none">王</div>
+                            <div>
+                                <div class="text-[16px] font-bold text-slate-800 flex items-center gap-2 pointer-events-none">王老师 <span class="bg-indigo-50 text-indigo-700 px-2 py-0.5 rounded text-[12px] font-bold border border-indigo-200">业主本人</span></div>
+                                <div class="text-[13px] text-slate-500 font-mono mt-1 font-medium">138****5678</div>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-1.5">
+                            <button class="text-slate-400 hover:text-emerald-500 p-2 rounded-full hover:bg-slate-100 active:scale-95 transition-all" onclick="event.stopPropagation(); showCustomToast('正在拨打热线：138****5678')">
+                                <i data-lucide="phone" class="w-5 h-5 pointer-events-none"></i>
+                            </button>
+                            <button class="text-slate-400 hover:text-slate-600 p-2 rounded-full hover:bg-slate-100 active:scale-95 transition-all" onclick="event.stopPropagation(); openMemberModal('编辑', '王老师', '业主本人', '138****5678', 'wang_teacher88', '对保洁要求极高；喜欢周末早上打球，勿在此时段致电打扰。')">
+                                <i data-lucide="edit" class="w-5 h-5 pointer-events-none"></i>
+                            </button>
+                            <i data-lucide="chevron-down" id="member-icon-owner" class="w-5 h-5 text-slate-400 transition-transform duration-300 pointer-events-none"></i>
+                        </div>
+                    </div>
+                    <!-- 详情展开区 -->
+                    <div id="member-detail-owner" class="hidden border-t border-slate-100 bg-slate-50/50 p-4 pb-4">
+                        <div class="text-[14px] text-slate-700 mb-3.5 leading-relaxed font-medium">
+                            <span class="font-bold text-slate-500">备注：</span>对保洁要求极高；喜欢周末早上打球，勿在此时段致电打扰。
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div class="text-[13px] text-slate-600 font-mono font-medium flex items-center gap-1.5 bg-white px-2.5 py-1.5 rounded-lg border border-slate-200">
+                                <i data-lucide="message-square" class="w-4 h-4 text-emerald-500"></i> wxid: wang_teacher88
+                            </div>
+                            <button onclick="startWeComChat('王老师')" class="bg-white text-emerald-700 border border-emerald-300 px-3.5 py-2 rounded-xl text-[13px] font-extrabold flex items-center gap-1.5 active:scale-95 hover:bg-emerald-50 shadow-sm">
+                                <i data-lucide="message-circle" class="w-4 h-4"></i> 企微单聊
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            if (status === '自住') {
+                html += `
+                <!-- 同住家属 -->
+                <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden animate-fade-in transition-all mt-3">
+                    <div class="flex items-center justify-between p-4 cursor-pointer hover:bg-slate-50 active:bg-slate-100" onclick="toggleMemberDetail('family')">
+                        <div class="flex items-center gap-3">
+                            <div class="w-11 h-11 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold text-[16px]">李</div>
+                            <div>
+                                <div class="text-[15px] font-extrabold text-slate-800 flex items-center gap-1.5">李先生 <span class="bg-emerald-50 text-emerald-700 px-1.5 py-0.5 rounded text-[11px] font-bold border border-emerald-200 font-extrabold">家属/同住人</span></div>
+                                <div class="text-[13px] text-slate-500 font-mono mt-1 font-medium">139****1234</div>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-1">
+                            <button class="text-slate-500 hover:text-emerald-500 p-2 rounded-full hover:bg-slate-100 active:scale-95 transition-all" onclick="event.stopPropagation(); showCustomToast('正在拨打热线：139****1234')">
+                                <i data-lucide="phone" class="w-5 h-5 pointer-events-none"></i>
+                            </button>
+                            <button class="text-slate-500 hover:text-brand p-2 rounded-full hover:bg-slate-100 active:scale-95 transition-all" onclick="event.stopPropagation(); openMemberModal('编辑', '李先生', '家属/同住人', '139****1234', 'li_family123', '平时主要负责接送小孩，非常关心小区游乐设施的安全问题。')">
+                                <i data-lucide="edit" class="w-5 h-5 pointer-events-none"></i>
+                            </button>
+                            <i data-lucide="chevron-down" id="member-icon-family" class="w-5 h-5 text-slate-400 transition-transform duration-300 ml-1"></i>
+                        </div>
+                    </div>
+                    <div id="member-detail-family" class="hidden border-t border-slate-100 bg-slate-50/50 p-4 pb-4">
+                        <div class="text-[14px] text-slate-700 mb-3.5 leading-relaxed font-medium">
+                            <span class="font-bold text-slate-500">备注：</span>平时主要负责接送小孩，非常关心小区游乐设施的安全问题。
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div class="text-[13px] text-slate-600 font-mono font-medium flex items-center gap-1.5 bg-white px-2.5 py-1.5 rounded-lg border border-slate-200 font-medium">
+                                <i data-lucide="message-square" class="w-4 h-4 text-emerald-500"></i> wxid: li_family123
+                            </div>
+                            <button onclick="startWeComChat('李先生')" class="bg-white text-emerald-700 border border-emerald-300 px-3.5 py-2 rounded-xl text-[13px] font-extrabold flex items-center gap-1.5 active:scale-95 hover:bg-emerald-50 shadow-sm">
+                                <i data-lucide="message-circle" class="w-4 h-4"></i> 企微单聊
+                            </button>
+                        </div>
+                    </div>
+                </div>`;
+            } else if (status === '出租') {
+                html += `
+                <!-- 承租人 -->
+                <div class="bg-purple-50/30 rounded-2xl border border-purple-200 shadow-sm overflow-hidden animate-fade-in transition-all mt-3">
+                    <div class="flex items-center justify-between p-4 cursor-pointer hover:bg-purple-100/50 active:bg-purple-100/80" onclick="toggleMemberDetail('tenant')">
+                        <div class="flex items-center gap-3">
+                            <div class="w-11 h-11 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center font-bold text-[16px]">张</div>
+                            <div>
+                                <div class="text-[15px] font-extrabold text-slate-800 flex items-center gap-1.5">张女士 <span class="bg-purple-100 text-purple-700 px-1.5 py-0.5 rounded text-[11px] font-bold border border-purple-200 font-extrabold">当前租客</span></div>
+                                <div class="text-[13px] text-purple-600/80 font-mono mt-1 font-medium">186****9999</div>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-1">
+                            <button class="text-slate-500 hover:text-emerald-500 p-2 rounded-full hover:bg-purple-200/50 active:scale-95 transition-all" onclick="event.stopPropagation(); showCustomToast('正在拨打热线：186****9999')">
+                                <i data-lucide="phone" class="w-5 h-5 pointer-events-none"></i>
+                            </button>
+                            <button class="text-slate-500 hover:text-brand p-2 rounded-full hover:bg-purple-200/50 active:scale-95 transition-all" onclick="event.stopPropagation(); openMemberModal('编辑', '张女士', '租客', '186****9999', 'zhang_live99', '从事电商直播行业，经常有大件快递放前台，作息黑白颠倒。')">
+                                <i data-lucide="edit" class="w-5 h-5 pointer-events-none"></i>
+                            </button>
+                            <i data-lucide="chevron-down" id="member-icon-tenant" class="w-5 h-5 text-slate-400 transition-transform duration-300 ml-1"></i>
+                        </div>
+                    </div>
+                    <div id="member-detail-tenant" class="hidden border-t border-purple-100/80 bg-white/80 p-4 pb-4">
+                        <div class="text-[14px] text-slate-700 mb-3.5 leading-relaxed font-medium">
+                            <span class="font-bold text-slate-500">备注：</span>从事电商直播行业，经常有大件快递放前台，作息黑白颠倒状态。
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div class="text-[13px] text-slate-600 font-mono font-medium flex items-center gap-1.5 bg-white px-2.5 py-1.5 rounded-lg border border-slate-200 shadow-sm">
+                                <i data-lucide="message-square" class="w-4 h-4 text-emerald-500"></i> wxid: zhang_live99
+                            </div>
+                            <button onclick="startWeComChat('张女士 (租客)')" class="bg-white text-emerald-700 border border-emerald-300 px-3.5 py-2 rounded-xl text-[13px] font-extrabold flex items-center gap-1.5 active:scale-95 hover:bg-emerald-50 shadow-sm">
+                                <i data-lucide="message-circle" class="w-4 h-4"></i> 企微单聊
+                            </button>
+                        </div>
+                    </div>
+                </div>`;
+            }
+
+            list.innerHTML = html;
+            safeInitIcons();
+        }
+
         function closeBill() {
             const billModal = document.getElementById('bill-modal');
-            billModal.classList.remove('opacity-100', 'pointer-events-auto', 'scale-100');
-            billModal.classList.add('opacity-0', 'pointer-events-none', 'scale-95');
-            clearTimeout(billTypeTimeout);
-            isBillTyping = false;
+            if (billModal) {
+                billModal.classList.remove('opacity-100', 'pointer-events-auto', 'scale-100');
+                billModal.classList.add('opacity-0', 'pointer-events-none', 'scale-95');
+            }
+            clearTimeout(billTypeTimeout); isBillTyping = false;
         }
 
         function fillBillInput() {
-            closeBill(); 
-            closeWorkbench();
+            closeBill(); closeWorkbench();
             setTimeout(() => { 
-                mockInput.innerHTML = `<span class="text-slate-800">${billDraftMessage}</span>`; 
+                mockInput.innerHTML = `<span class="text-slate-900 font-medium">${billDraftMessage}</span>`; 
                 extraIcons.classList.add('hidden'); 
                 sendBtn.classList.remove('hidden'); 
             }, 300);
         }
 
-        // --- Toast 反馈机制 ---
-        function showCustomToast(msg) { document.getElementById('toast-owner-msg').innerText = msg; showToast('toast-owner'); }
-
-        // --- LUI 语音双端识别 ---
-        let isRecordingAi = false, isRecordingOwner = false;
-        let toastTimeoutAi, toastTimeoutOwner;
-
-        function startRecordAi(e) {
-            if(e) e.preventDefault(); isRecordingAi = true;
-            document.getElementById('mic-btn-ai').classList.add('bg-slate-200', 'scale-[0.98]');
-            document.getElementById('mic-content-ai').innerHTML = `<i data-lucide="mic" class="w-5 h-5 text-slate-500 pointer-events-none"></i><span class="text-slate-600 pointer-events-none">松开 结束录音</span>`;
-            lucide.createIcons();
-        }
-        function stopRecordAi(e) {
-            if(e) e.preventDefault(); if (!isRecordingAi) return;
-            isRecordingAi = false;
-            document.getElementById('mic-btn-ai').classList.remove('bg-slate-200', 'scale-[0.98]');
-            document.getElementById('mic-content-ai').innerHTML = `<i data-lucide='loader-2' class='w-5 h-5 animate-spin pointer-events-none'></i> <span class="pointer-events-none">识别语意中...</span>`;
-            lucide.createIcons();
-            setTimeout(() => {
-                document.getElementById('mic-content-ai').innerHTML = `<i data-lucide='mic' class='w-5 h-5 text-brand pointer-events-none'></i> <span class="pointer-events-none">按住 帮我记录</span>`;
-                lucide.createIcons(); showToast('toast-ai');
-            }, 1200);
-        }
-        function cancelRecordAi(e) { if (isRecordingAi) stopRecordAi(e); }
+        // --- 语音按钮兜底逻辑 ---
+        let isRecordingOwner = false;
+        let isRecordingAi = false;
 
         function startRecordOwner(e) {
-            if(e) e.preventDefault(); isRecordingOwner = true;
-            document.getElementById('mic-btn-owner').classList.add('bg-slate-200', 'scale-[0.98]');
-            document.getElementById('mic-content-owner').innerHTML = `<i data-lucide="mic" class="w-5 h-5 text-slate-500 pointer-events-none"></i><span id="lui-button-text" class="text-slate-600 pointer-events-none">松开 结束语音</span>`;
-            lucide.createIcons();
+            if (e) e.preventDefault();
+            isRecordingOwner = true;
+            const btn = document.getElementById('mic-btn-owner');
+            const txt = document.getElementById('lui-button-text');
+            if (btn) {
+                btn.classList.add('bg-slate-700', 'scale-[0.98]');
+                btn.classList.remove('bg-slate-900');
+            }
+            if (txt) txt.innerText = "松开 结束语音";
         }
+
         function stopRecordOwner(e) {
-            if(e) e.preventDefault(); if (!isRecordingOwner) return;
+            if (e) e.preventDefault();
+            if (!isRecordingOwner) return;
             isRecordingOwner = false;
-            document.getElementById('mic-btn-owner').classList.remove('bg-slate-200', 'scale-[0.98]');
-            document.getElementById('mic-content-owner').innerHTML = `<i data-lucide='loader-2' class='w-5 h-5 animate-spin pointer-events-none'></i> <span id="lui-button-text" class="pointer-events-none">自动归档中...</span>`;
-            lucide.createIcons();
-            
+            const btn = document.getElementById('mic-btn-owner');
+            const txt = document.getElementById('lui-button-text');
+            if (btn) {
+                btn.classList.remove('bg-slate-700', 'scale-[0.98]');
+                btn.classList.add('bg-slate-900');
+            }
+            if (txt) txt.innerText = "自动解析中...";
+
             setTimeout(() => {
-                let restoreText = "按住 语音登记";
-                if (currentTab === 'person') restoreText = "按住 语音登记人情特征";
-                else if (currentTab === 'property') restoreText = "按住 记录工程档案";
-                else if (currentTab === 'events') restoreText = "按住 语音催办工单";
+                if (currentTab === 'events') openTodoModal();
+                else openNoteModal(currentTab);
+                if (txt) {
+                    txt.innerText = currentTab === 'property' ? "按住 记录隐患" : (currentTab === 'events' ? "按住 生成待办" : "按住 录入客情");
+                }
+            }, 600);
+        }
 
-                document.getElementById('mic-content-owner').innerHTML = `<i data-lucide='mic' class='w-5 h-5 text-brand pointer-events-none'></i> <span id="lui-button-text" class="pointer-events-none">${restoreText}</span>`;
-                lucide.createIcons();
-                showCustomToast("已通过语音完成数据记录");
-            }, 1200);
+        function cancelRecordOwner(e) {
+            if (isRecordingOwner) stopRecordOwner(e);
         }
-        function cancelRecordOwner(e) { if (isRecordingOwner) stopRecordOwner(e); }
 
-        function showToast(id) {
-            const toast = document.getElementById(id);
-            toast.classList.remove('opacity-0', 'translate-y-4', 'pointer-events-none');
-            toast.classList.add('opacity-100', 'translate-y-0', 'pointer-events-auto');
-            if(id === 'toast-ai') { clearTimeout(toastTimeoutAi); toastTimeoutAi = setTimeout(() => hideToast(id), 2500); }
-            else { clearTimeout(toastTimeoutOwner); toastTimeoutOwner = setTimeout(() => hideToast(id), 2500); }
+        function startRecordAi(e) {
+            if (e) e.preventDefault();
+            isRecordingAi = true;
+            const btn = document.getElementById('mic-btn-ai');
+            const content = document.getElementById('mic-content-ai');
+            if (btn) {
+                btn.classList.add('bg-slate-700', 'scale-[0.98]');
+                btn.classList.remove('bg-slate-800');
+            }
+            if (content) content.innerHTML = `<i data-lucide="mic" class="w-6 h-6"></i><span>松开 结束语音</span>`;
+            safeInitIcons();
         }
-        function hideToast(id) {
-            const toast = document.getElementById(id);
-            toast.classList.remove('opacity-100', 'translate-y-0', 'pointer-events-auto');
-            toast.classList.add('opacity-0', 'translate-y-4', 'pointer-events-none');
+
+        function stopRecordAi(e) {
+            if (e) e.preventDefault();
+            if (!isRecordingAi) return;
+            isRecordingAi = false;
+            const btn = document.getElementById('mic-btn-ai');
+            const content = document.getElementById('mic-content-ai');
+            if (btn) {
+                btn.classList.remove('bg-slate-700', 'scale-[0.98]');
+                btn.classList.add('bg-slate-800');
+            }
+            if (content) content.innerHTML = `<i data-lucide="loader-2" class="w-6 h-6 animate-spin"></i><span>执行指令中...</span>`;
+            safeInitIcons();
+
+            setTimeout(() => {
+                if (content) content.innerHTML = `<i data-lucide="mic" class="w-6 h-6"></i><span>按住 帮我做</span>`;
+                safeInitIcons();
+                showCustomToast("AI助手已完成指令解析");
+            }, 600);
         }
-        function undoActionAi() { hideToast('toast-ai'); }
-        function undoActionOwner() { hideToast('toast-owner'); }
+
+        function cancelRecordAi(e) {
+            if (isRecordingAi) stopRecordAi(e);
+        }
+
+        // 默认载入
+        setTimeout(() => { switchTab('person'); }, 100);
     </script>
 </body>
 </html>
